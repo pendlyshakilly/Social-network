@@ -1,0 +1,14 @@
+.Users {
+    padding: 7px;
+}
+
+.UsersContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.User {
+    padding: 10px;
+    margin: 6px;
+    min-width: 150px;
+}

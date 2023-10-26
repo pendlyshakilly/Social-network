@@ -1,0 +1,20 @@
+.UserProfileContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.ImageContainer{
+    margin-right: 100px;
+}
+
+.ImageContainer img{
+    width: 200px;
+    height: 200px;
+    border-radius: 130px;
+}
+
+.Navigate{
+    display: flex;
+    align-items: center;
+}
