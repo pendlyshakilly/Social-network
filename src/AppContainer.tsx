@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {lazy, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, AppRootStateType} from "./State/Store";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import App from "./App";
 import Login from "./Components/Login/Login";
 import Loader from "./Components/Utils/Loader/Loader";
 import {Initialized} from "./State/App-reducer";
+import WithSuspense from "./Components/Utils/WithSuspense/WithSuspense";
+let App = lazy(() => import("./App"))
 
 const AppContainer = () => {
     const initialized = useSelector<AppRootStateType>(state => state.initialized.initialized)
@@ -19,11 +20,12 @@ const AppContainer = () => {
         return <Loader/>
     }
 
+    console.log('render')
     return (
         <div>
             <BrowserRouter>
                 <Routes>
-                    <Route path={"/*"} Component={() => <App/>}/>
+                    <Route path={"/*"} Component={WithSuspense(App)}/>
                     <Route path={"/login"} Component={() => <Login/>}/>
                 </Routes>
             </BrowserRouter>

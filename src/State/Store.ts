@@ -5,7 +5,6 @@ import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import AppReducer from "./App-reducer";
 import UserReducer from "./Users-reducer";
 import {composeWithDevTools} from "@redux-devtools/extension";
-import {promises} from "dns";
 
 
 type ReducerType = typeof rootReducers

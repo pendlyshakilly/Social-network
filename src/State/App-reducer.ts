@@ -1,5 +1,6 @@
 import {AppThunk} from "./Store";
 import {GetUserDataAuth} from "./Auth-reducer";
+import {getFriends} from "./Users-reducer";
 
 
 type InitialStateType = {
@@ -22,7 +23,7 @@ const AppReducer = (state = InitialState, action: { type: string }) => {
 const INITIALIZED_TYPE = 'INITIALIZED_TYPE' as const
 export const InitializedSuccess = () => ({type: INITIALIZED_TYPE})
 export const Initialized = (): AppThunk => (dispatch) => {
-    Promise.all([dispatch(GetUserDataAuth())])
+    Promise.all([dispatch(GetUserDataAuth()), dispatch(getFriends())])
         .then(() => {
             dispatch(InitializedSuccess())
         })

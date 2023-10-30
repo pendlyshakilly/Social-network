@@ -21,7 +21,7 @@ export const setMyStatusSuccess = (status: string) => ({type: SET_USER_STATUS_TY
 export const setMyStatus = (status: string): AppThunk => (dispatch) => {
     ProfileAPI.updateStatus(status)
         .then(res => {
-            debugger
+
             dispatch(setMyStatusSuccess(status))
         })
         .catch(e => alert(e))

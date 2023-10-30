@@ -51,7 +51,7 @@ const Login = () => {
     });
 
     if (isAuth) {
-        return <Navigate to={'/'}/>
+        return <Navigate to={'/my-profile'}/>
     }
 
     return (

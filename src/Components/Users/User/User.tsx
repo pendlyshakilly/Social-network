@@ -5,18 +5,19 @@ import {Button} from "@mui/material";
 import {Follow} from "../../../State/Users-reducer";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../../State/Store";
+import Avatar from "@mui/material/Avatar";
 
 type PropsType = {
     id: number,
     status: string,
-    photoUrl: string,
+    photos: {small: null | string, large: null | string},
     name: string,
     disabledMode: [],
     followed: boolean
 }
 
 
-const User = React.memo(({id, status, photoUrl, name, followed, ...props}: PropsType) => {
+const User = React.memo(({id, status, photos, name, followed, ...props}: PropsType) => {
     const dispatch = useDispatch<AppDispatch>()
 
     const follow = () => {
@@ -27,9 +28,7 @@ const User = React.memo(({id, status, photoUrl, name, followed, ...props}: Props
     }
     return <div key={id} className={s.User}>
         <NavLink to={'/user-profile/' + id}>
-            <img
-                src={photoUrl == null ? 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png' : photoUrl}
-                className={s.Img}/>
+           <Avatar sx={{width: '50px', height: '50px'}} src={photos.small == null ? 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png' : photos.small}/>
         </NavLink>
         <div>{name}</div>
         <span>

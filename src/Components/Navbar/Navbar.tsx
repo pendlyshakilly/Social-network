@@ -13,20 +13,13 @@ const Navbar = () => {
             <div className={s.item}>
                 <a onClick={() => setState(!state)}>Search</a>
             </div>
-            <div className={`${s.item} ${s.active}`}>
+            <div className={s.item}>
                 <NavLink to={"/dialogs"}>Messages</NavLink>
             </div>
             <div className={s.item}>
                 <NavLink to={"/users"}>Users</NavLink>
             </div>
-            <div className={s.item}>
-                <NavLink to={"/music"}>Music</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to={"/settings"}>Settings</NavLink>
-            </div>
             <div>
-
             </div>
         </div>
         {state ? <div>

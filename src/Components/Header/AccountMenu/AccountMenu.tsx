@@ -92,12 +92,6 @@ function AccountMenu() {
                     <Avatar /> My account
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={() => linkMenuHandler('settings')}>
-                    <ListItemIcon>
-                        <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Settings
-                </MenuItem>
                 <MenuItem onClick={onClickLogoutHandler}>
                     <ListItemIcon>
                         <Logout fontSize="small" />

@@ -10,7 +10,6 @@ export const SetTotalCount = (total_Count: number) => ({type: SET_TOTAL_COUNT, t
 export const ToggleLoader = (isFetching: boolean) => ({type: TOGGLE_LOADER, isFetching} as const)
 const setFriends = (friends: UserType[]) => ({type: SET_FRIENDS, friends})
 
-
 export const SetDisable = (disable: boolean, userId: number) => ({type: SET_DISABLE, disable, userId} as const)
 
 export const GetUsers = (currentPage: number, pageSize: number): AppThunk => (dispatch) => {
@@ -54,7 +53,7 @@ export type UserPageType = {
     currentPage: number,
     isFetching: boolean,
     disabledMode: [],
-    friends: UserType[]
+    friends: UserType[],
 }
 
 const UserReducer = (state: UserPageType = initialState, action: UsersActionType) => {
@@ -119,7 +118,7 @@ const initialState: UserPageType = {
     currentPage: 1,
     isFetching: true,
     disabledMode: [],
-    friends: []
+    friends: [],
 }
 
 const FOLLOWED_TYPE = 'FOLLOWED_TYPE' as const
@@ -133,7 +132,7 @@ const SET_FRIENDS = 'SET_FRIENDS' as const
 
 export type UserType = {
     id: number,
-    photoUrl: string,
+    photos: {small: null | string, large: null | string},
     followed: boolean,
     name: string,
     status: string

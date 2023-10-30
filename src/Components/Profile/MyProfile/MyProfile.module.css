@@ -14,7 +14,7 @@
     justify-content: space-between;
     align-items: start;
     flex-wrap: wrap;
-    height: 150px;
+    height: 100px;
 }
 
 .BigImg{
@@ -27,17 +27,19 @@
 
 .Avatar{
     border: 4px solid white;
-    position: absolute;
-    bottom: 100px;
+    bottom: 120px;
     width: 168px;
     height: 168px;
 }
 
 .FriendsContainer{
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     margin-left: 20px;
     min-height: 100%;
 }
+
 
 .ContainerDescription{
     display: flex;
@@ -45,13 +47,10 @@
     min-height: 40vh;
 }
 
-
-.Test{
-    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-    cursor: pointer
+.User {
+    margin: 0 40px 0 10px;
+    min-width: 150px;
 }
-
-
 
 
 
