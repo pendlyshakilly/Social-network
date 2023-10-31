@@ -39,17 +39,17 @@ function AccountMenu() {
 
     return (
         <React.Fragment>
-            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+            <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
-                        size="small"
-                        sx={{ ml: 2 }}
+                        size="large"
+                        sx={{ml: 2, width: 40, height: 40}}
                         aria-controls={open ? 'account-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32, backgroundColor: '#bdbdbd'}}>IP</Avatar>
+                        <Avatar sx={{width: 40, height: 40, backgroundColor: '#bdbdbd'}}>IP</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -85,16 +85,16 @@ function AccountMenu() {
                         },
                     },
                 }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                transformOrigin={{horizontal: 'right', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
                 <MenuItem onClick={() => linkMenuHandler('my-profile')}>
-                    <Avatar /> My account
+                    <Avatar/> My account
                 </MenuItem>
-                <Divider />
+                <Divider/>
                 <MenuItem onClick={onClickLogoutHandler}>
                     <ListItemIcon>
-                        <Logout fontSize="small" />
+                        <Logout fontSize="small"/>
                     </ListItemIcon>
                     Logout
                 </MenuItem>

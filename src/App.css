@@ -3,6 +3,8 @@
     width: 100%;
     display: flex;
     position: relative;
+    background-color: whitesmoke;
+    bottom: 5px
 }
 
 .App-container {

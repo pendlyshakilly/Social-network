@@ -1,11 +1,11 @@
 .headerContainer {
     margin-bottom: 6px;
-    background-color: #c4c4c4;
+    background-color: white;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1;
-    height: 50px;
+    height: 60px;
 }
 
 .header {

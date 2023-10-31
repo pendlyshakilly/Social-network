@@ -10,6 +10,7 @@ import {AppRootStateType} from "../../State/Store";
 import AccountMenu from "./AccountMenu/AccountMenu";
 import PeopleIcon from '@mui/icons-material/People';
 import Divider from "@mui/material/Divider";
+import Logo from './Logo.png'
 
 type PropsType = {}
 
@@ -20,32 +21,37 @@ const Header = (props: PropsType) => {
 
     return <>
         <AppBar className={s.headerContainer} sx={{backgroundColor: 'whitesmoke'}}>
-            <div>
-                <div>
-                </div>
-            </div>
             <header className={s.header}>
                 <img
-                    src='https://thumbs.dreamstime.com/b/teamwork-community-logo-design-vector-adoption-social-network-template-156215000.jpg'/>
+                    src={Logo} style={{width: '50px', height: '50px', marginLeft: '0', margin: '5px'}}/>
                 <a className={s.Navigate}>
-                    <NavLink to={'/main'} style={{marginRight: '20px', width: '60px', margin: '0 auto'}}>
+                    <NavLink to={'/main'} style={{marginRight: '20px', width: '60px', margin: '5px 50px 0 0'}}>
                         {params['*'] === 'main' ?
                             <div>
-                                <GroupsIcon fontSize={'large'} sx={{color: '#1976d2', marginLeft: '13px'}}/>
-                                <Divider sx={{backgroundColor: '#1976d2', height: '3px'}}/>
+                                <GroupsIcon fontSize={'large'}
+                                            sx={{color: '#1976d2', marginLeft: '17px', width: '50px', height: '47px'}}/>
+                                <Divider sx={{backgroundColor: '#1976d2', height: '3px', width: '85px'}}/>
                             </div>
                             :
-                            <GroupsOutlinedIcon sx={{color: '#808080', marginLeft: '13px'}} fontSize={'large'}/>
+                            <GroupsOutlinedIcon
+                                sx={{color: '#808080', marginLeft: '17px', width: '50px', height: '47px'}}
+                                fontSize={'large'}/>
                         }
                     </NavLink>
-                    <NavLink to={'/friends'} style={{width: '60px',}}>
+                    <NavLink to={'/friends'} style={{width: '60px', marginTop: '5px'}}>
                         {params['*'] === 'friends' ?
                             <div>
-                                <PeopleIcon sx={{color: '#1b7ede', marginLeft: '14px'}} fontSize={'large'}/>
-                                <Divider sx={{backgroundColor: '#1976d2', height: '3px'}}/>
+                                <PeopleIcon sx={{color: '#1976d2', marginLeft: '17px', width: '50px', height: '47px'}}
+                                            fontSize={'large'} />
+                                <Divider sx={{backgroundColor: '#1976d2', height: '3px', width: '85px'}}/>
                             </div>
                             :
-                            <PeopleOutlineIcon fontSize={'large'} sx={{marginLeft: '14px', color: '#808080' }}/>
+                            <PeopleOutlineIcon fontSize={'large'} sx={{
+                                color: '#808080',
+                                marginLeft: '17px',
+                                width: '50px',
+                                height: '47px'
+                            }}/>
 
                         }
                     </NavLink>
