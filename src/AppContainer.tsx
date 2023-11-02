@@ -6,10 +6,11 @@ import Login from "./Components/Login/Login";
 import Loader from "./Components/Utils/Loader/Loader";
 import {Initialized} from "./State/App-reducer";
 import WithSuspense from "./Components/Utils/WithSuspense/WithSuspense";
+
 let App = lazy(() => import("./App"))
 
 const AppContainer = () => {
-    const initialized = useSelector<AppRootStateType>(state => state.initialized.initialized)
+   const initialized = useSelector<AppRootStateType>((state) => state.initialized.initialized)
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
@@ -20,7 +21,6 @@ const AppContainer = () => {
         return <Loader/>
     }
 
-    console.log('render')
     return (
         <div>
             <BrowserRouter>

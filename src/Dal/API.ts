@@ -1,4 +1,5 @@
 import axios from "axios";
+import {isRouteErrorResponse} from "react-router-dom";
 
 
 const instance = axios.create({
@@ -24,6 +25,10 @@ export const UsersAPI = {
     },
     getFriends (status: boolean = true){
         return instance.get(`users?friend=${status}`)
+            .then(response => response.data)
+    },
+    findUser (userName: string){
+        return instance.get(`users?term=${userName}`)
             .then(response => response.data)
     }
 }

@@ -6,10 +6,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, AppRootStateType} from "../../../State/Store";
 import {getFriends, UserPageType, UserType} from "../../../State/Users-reducer";
 import User from "../../Users/User/User";
-import SocialMedias from "../../Utils/SocialMediaBlock/SocialMedias";
+import DescriptionBlock from "../../Utils/DecriptionBlock/DescriptionBlock";
 
 const MyProfile = () => {
-    const {friends, disabledMode} = useSelector<AppRootStateType, UserPageType>(state => state.userPage)
+    const friends = useSelector<AppRootStateType, UserType[]>(state => state.userPage.friends)
     const dispatch = useDispatch<AppDispatch>()
 
 
@@ -39,13 +39,12 @@ const MyProfile = () => {
                     </div>
                 </div>
                 <div className={s.ContainerDescription}>
-                    <SocialMedias/>
+                    <DescriptionBlock/>
                         <Paper elevation={4} className={s.FriendsContainer}>
                             {friends.slice(0, 6).map((el: UserType) => <div className={s.User}>
                                     <User id={el.id} status={el.status}
                                           photos={el.photos}
                                           name={el.name}
-                                          disabledMode={disabledMode}
                                           followed={el.followed}/>
                                 </div>
                             )}

@@ -8,7 +8,11 @@ import User from "./User/User";
 
 const Users = () => {
     const dispatch = useDispatch<AppDispatch>()
-    const {currentPage, pageSize, users, disabledMode} = useSelector<AppRootStateType, UserPageType>(state => state.userPage)
+    const currentPage = useSelector<AppRootStateType, number>(state => state.userPage.currentPage)
+    const pageSize = useSelector<AppRootStateType, number>(state => state.userPage.pageSize)
+    const users = useSelector<AppRootStateType, UserType[]>(state => state.userPage.users)
+
+
 
     useEffect(() => {
         dispatch(GetUsers(currentPage, pageSize))
@@ -23,7 +27,6 @@ const Users = () => {
                     <User id={el.id} status={el.status}
                           photos={el.photos}
                           name={el.name}
-                          disabledMode={disabledMode}
                           followed={el.followed}/>
                 </Paper>
             )}

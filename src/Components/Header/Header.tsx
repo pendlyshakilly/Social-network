@@ -19,14 +19,13 @@ const Header = (props: PropsType) => {
     const isAuth = useSelector<AppRootStateType>(state => state.auth.isAuth)
     const params = useParams()
 
-    return <>
-        <AppBar className={s.headerContainer} sx={{backgroundColor: 'whitesmoke'}}>
+    return <AppBar className={s.headerContainer} sx={{backgroundColor: 'whitesmoke'}}>
             <header className={s.header}>
                 <img
                     src={Logo} style={{width: '50px', height: '50px', marginLeft: '0', margin: '5px'}}/>
                 <a className={s.Navigate}>
-                    <NavLink to={'/main'} style={{marginRight: '20px', width: '60px', margin: '5px 50px 0 0'}}>
-                        {params['*'] === 'main' ?
+                    <NavLink to={'/users'} style={{marginRight: '20px', width: '60px', margin: '5px 50px 0 0'}}>
+                        {params['*'] === 'users' ?
                             <div>
                                 <GroupsIcon fontSize={'large'}
                                             sx={{color: '#1976d2', marginLeft: '17px', width: '50px', height: '47px'}}/>
@@ -59,8 +58,6 @@ const Header = (props: PropsType) => {
                 {isAuth ? <AccountMenu/> : <NavLink to={'/login'} className={s.Login}>Login</NavLink>}
             </header>
         </AppBar>
-
-    </>
 }
 
 export default Header;

@@ -1,6 +1,5 @@
 import {AppThunk} from "./Store";
 import {ProfileAPI} from "../Dal/API";
-import {array} from "yup";
 
 const USER_PROFILE_TYPE = 'USER_PAGE' as const
 const SET_USER_STATUS_TYPE = 'SET_USER_STATUS' as const

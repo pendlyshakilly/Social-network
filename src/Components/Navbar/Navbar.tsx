@@ -1,45 +1,59 @@
-import React, {useState} from "react";
+import React from "react";
 import s from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SearchIcon from '@mui/icons-material/Search';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import GroupsIcon from '@mui/icons-material/Groups';
+import Search from "./Search/Search";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, AppRootStateType} from "../../State/Store";
+import {AppInitialStateType, SetSearchMode} from "../../State/App-reducer";
 
 
 const Navbar = () => {
-    const [state, setState] = useState(false)
-    return <nav className={s.nav}>
-        <div>
-            <div className={s.item}>
-                <NavLink to={"/my-profile"}><img src={''}/>Profile</NavLink>
-            </div>
-            <div className={s.item}>
-                <a onClick={() => setState(!state)}>Search</a>
-            </div>
-            <div className={s.item}>
-                <NavLink to={"/dialogs"}>Messages</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to={"/users"}>Users</NavLink>
-            </div>
+
+    const {searchMode} = useSelector<AppRootStateType, AppInitialStateType>(state => state.initialized)
+    const dispatch = useDispatch<AppDispatch>()
+
+    let style = searchMode ? {display: 'flex', alignItems: 'center', marginLeft: '5px', width: '45px'}
+        : {display: 'flex', alignItems: 'center', marginLeft: '5px'}
+    let sx = {margin: '0 10px 0 5px', color: '#0f4a8d'}
+
+
+    const setSearchMode = (status: boolean) => {
+        dispatch(SetSearchMode(status))
+    }
+
+    return <div className={s.navbarContainer}>
+        <nav className={s.nav}>
             <div>
+                <NavLink to={"/my-profile"} className={s.item} style={style} onClick={() => setSearchMode(false)}>
+                    <AccountCircleIcon fontSize={'large'} sx={sx}/>
+                    {!searchMode && <span>Profile</span>}
+                </NavLink>
+                <a className={s.item} id={'search-button'} style={style} onClick={() => setSearchMode(!searchMode)}>
+                    <SearchIcon fontSize={'large'} sx={sx}/>
+                    {!searchMode && <span>Search</span>}
+                </a>
+                <NavLink to={"/dialogs"} className={s.item} onClick={() => setSearchMode(false)} style={style}>
+                    <TelegramIcon fontSize={'large'} sx={sx}/>
+                    {!searchMode && <span>Messages</span>}
+                </NavLink>
+                <NavLink to={"/users"} className={s.item} onClick={() => setSearchMode(false)} style={style}>
+                    <GroupsIcon fontSize={'large'} sx={sx}/>
+                    {!searchMode && <span>Users</span>}
+                </NavLink>
+                <div>
+                </div>
             </div>
-        </div>
-        {state ? <div>
-            <div className={s.item}>
-                <NavLink to={"/profile"}><img src={''}/>Profile</NavLink>
-            </div>
-            <div className={`${s.item} ${s.active}`}>
-                <NavLink to={"/dialogs"}>Messages</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to={"/users"}>Users</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to={"/music"}>Music</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to={"/settings"}>Settings</NavLink>
-            </div>
-        </div> : null}
-    </nav>
+            {searchMode &&
+
+                <Search onClickAway={() => {setSearchMode(false)}}/>
+
+                    }
+        </nav>
+    </div>
 }
 
 export default Navbar;

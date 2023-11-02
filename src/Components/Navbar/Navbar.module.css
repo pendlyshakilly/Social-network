@@ -1,17 +1,35 @@
+.navbarContainer{
+    position: relative;
+    z-index: 3;
+}
+
 .nav {
-    padding: 10px;
-    position: -webkit-sticky;
+    padding-left: 5px;
     position: sticky;
     top: 80px;
     display: flex;
+    width: 200px;
 }
 
-.item a{
+.item{
+    width: 200px;
+    height: 60px;
+    display: flex;
+    align-items: center;
     font-family: inherit;
-    font-size: 19px;
+    font-size: 16px;
     color: black;
     text-decoration: none;
+    font-weight: 500;
 }
 
+.item:hover{
+    background-color: rgba(224, 224, 224, 0.88);
+    border-radius: 7px;
+}
+
+.item:active{
+    background-color: rgba(200, 200, 200, 0.88);;
+}
 
 

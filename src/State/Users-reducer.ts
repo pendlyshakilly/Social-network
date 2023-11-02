@@ -1,6 +1,7 @@
 import {UsersAPI} from "../Dal/API";
 import {AppThunk} from "./Store";
 import {setUserFollow} from "./Profile-reducer";
+import {DeleteError, SetError} from "./App-reducer";
 
 
 export const FollowSuccess = (userId: number, status: boolean) => ({type: FOLLOWED_TYPE, userId, status} as const)
@@ -8,9 +9,11 @@ export const SetUser = (users: UserType[]) => ({type: SET_USER_TYPE, users} as c
 export const SetCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 export const SetTotalCount = (total_Count: number) => ({type: SET_TOTAL_COUNT, total_Count} as const)
 export const ToggleLoader = (isFetching: boolean) => ({type: TOGGLE_LOADER, isFetching} as const)
-const setFriends = (friends: UserType[]) => ({type: SET_FRIENDS, friends})
-
+const SetFriends = (friends: UserType[]) => ({type: SET_FRIENDS, friends})
 export const SetDisable = (disable: boolean, userId: number) => ({type: SET_DISABLE, disable, userId} as const)
+export const FoundUsers = (foundUsers: UserType[]) => ({type: FOUND_USERS, foundUsers} as const)
+export const SetRecentUser = (resentUser: UserType) => ({type: SET_RECENT_USER, resentUser} as const)
+export const DeleteRecentUser = (userId: number) => ({type: DELETE_RECENT_USER, userId} as const)
 
 export const GetUsers = (currentPage: number, pageSize: number): AppThunk => (dispatch) => {
     dispatch(ToggleLoader(true))
@@ -42,21 +45,37 @@ export const Follow = (id: number, status: boolean): AppThunk => (dispatch) => {
 export const getFriends = (): AppThunk => (dispatch) => {
     dispatch(ToggleLoader(true))
     UsersAPI.getFriends().then(data => {
-        dispatch(setFriends(data.items))
+        dispatch(SetFriends(data.items))
+        dispatch(ToggleLoader(false))
+    })
+}
+export const findUser = (userName: string): AppThunk => (dispatch, getState) => {
+    UsersAPI.findUser(userName).then(res => {
+        let error = 'UserNotFound'
+        dispatch(DeleteError(error))
+        dispatch(FoundUsers(res.items))
+        if (res.items.length === 0){
+            if (!getState().initialized.errors.some(el => el === 'UserNotFound')) {
+                dispatch(SetError(error))
+            }
+        }
     })
 }
 
-export type UserPageType = {
-    users: UserType[],
-    pageSize: number,
-    TotalCount: number,
-    currentPage: number,
-    isFetching: boolean,
+
+const initialState: UserPageType = {
+    users: [],
+    pageSize: 50,
+    TotalCount: 0,
+    currentPage: 1,
+    isFetching: true,
     disabledMode: [],
-    friends: UserType[],
+    friends: [],
+    foundUsers: [],
+    recentUser: []
 }
 
-const UserReducer = (state: UserPageType = initialState, action: UsersActionType) => {
+const UserReducer = (state: UserPageType = initialState, action: UsersActionType): UserPageType => {
     switch (action.type) {
         case FOLLOWED_TYPE:
             return {
@@ -89,37 +108,61 @@ const UserReducer = (state: UserPageType = initialState, action: UsersActionType
                     : state.disabledMode.filter(id => id !== action.userId)
             }
         case SET_FRIENDS:
+            state.friends = action.friends
+            return state
+        case FOUND_USERS:
             return {
                 ...state,
-                friends: action.friends
+                foundUsers: action.foundUsers
             }
+        case SET_RECENT_USER:
+            if (action.resentUser === null) {
+                return {...state, recentUser: []}
+            } else {
+                if (state.recentUser.some(el => el.id === action.resentUser.id)){
+                    return state
+                }else return {...state, recentUser: [...state.recentUser, action.resentUser]}
+            }
+        case DELETE_RECENT_USER:
+            return {...state, recentUser: state.recentUser.filter(el => el.id !== action.userId)}
     }
 
     return state
 }
+
+
+
+
 type FollowSuccess = ReturnType<typeof FollowSuccess>
 type SetUser = ReturnType<typeof SetUser>
 type SetCurrentPage = ReturnType<typeof SetCurrentPage>
 type SetTotalCount = ReturnType<typeof SetTotalCount>
 type ToggleLoader = ReturnType<typeof ToggleLoader>
 type SetDisable = ReturnType<typeof SetDisable>
+type SetFriends = ReturnType<typeof SetFriends>
+type FoundUsers = ReturnType<typeof FoundUsers>
+type SetRecentUser = ReturnType<typeof SetRecentUser>
+type DeleteRecentUser = ReturnType<typeof DeleteRecentUser>
 
-type setFriends = ReturnType<typeof setFriends>
+export type UserPageType = {
+    users: UserType[],
+    pageSize: number,
+    TotalCount: number,
+    currentPage: number,
+    isFetching: boolean,
+    disabledMode: [] | number[],
+    friends: UserType[],
+    foundUsers: UserType[],
+    recentUser: UserType[]
+}
+
 
 export type UsersActionType =
     FollowSuccess | SetUser
     | SetCurrentPage | SetTotalCount
     | ToggleLoader | SetDisable
-    | setFriends
-const initialState: UserPageType = {
-    users: [],
-    pageSize: 50,
-    TotalCount: 0,
-    currentPage: 1,
-    isFetching: true,
-    disabledMode: [],
-    friends: [],
-}
+    | SetFriends | FoundUsers
+    | SetRecentUser | DeleteRecentUser
 
 const FOLLOWED_TYPE = 'FOLLOWED_TYPE' as const
 const SET_USER_TYPE = 'SET_USER_TYPE' as const
@@ -127,12 +170,14 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE' as const
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT' as const
 const TOGGLE_LOADER = 'TOGGLE_LOADER' as const
 const SET_DISABLE = 'SET_DISABLE' as const
-
+const FOUND_USERS = 'FOUND_USERS' as const
 const SET_FRIENDS = 'SET_FRIENDS' as const
+const SET_RECENT_USER = 'SET_RECENT_USER' as const
+const DELETE_RECENT_USER = 'DELETE_RECENT_USER' as const
 
 export type UserType = {
     id: number,
-    photos: {small: null | string, large: null | string},
+    photos: { small: null | string, large: null | string },
     followed: boolean,
     name: string,
     status: string

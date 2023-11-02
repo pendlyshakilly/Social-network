@@ -9,8 +9,9 @@ import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import InfoIcon from '@mui/icons-material/Info';
 
-const SocialMedias = () => {
+const DescriptionBlock = () => {
     let style = {
         background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)',
         cursor: 'pointer'
@@ -27,11 +28,21 @@ const SocialMedias = () => {
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
+                            <InfoIcon/>
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary="About Me" sx={{color: 'black'}}
+                                  secondaryTypographyProps={{color: 'black'}} secondary="célibataire"/>
+                </ListItem>
+                <Divider variant="inset" component="li"/>
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
                             <DescriptionIcon/>
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary="Status" sx={{color: 'black'}}
-                                  secondaryTypographyProps={{color: 'black'}} secondary="célibataire"/>
+                                  secondaryTypographyProps={{color: 'black'}} secondary="Hijbi228"/>
                 </ListItem>
                 <Divider variant="inset" component="li"/>
                 <ListItem>
@@ -89,4 +100,4 @@ const SocialMedias = () => {
     );
 };
 
-export default SocialMedias;
+export default DescriptionBlock;

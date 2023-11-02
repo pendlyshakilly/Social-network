@@ -10,19 +10,21 @@ import {useNavigate, useParams} from "react-router-dom";
 const UserProfile = () => {
     const dispatch = useDispatch<AppDispatch>()
     const param = useParams<'userId'>()
+    const UserProfile = useSelector<AppRootStateType, UserProfileType | null>(state => state.profilePage.UserProfile)
+    const UserFollow = useSelector<AppRootStateType, boolean>(state => state.profilePage.UserFollow)
     let navigate = useNavigate()
+
+
     useEffect(() => {
         if (param.userId) {
             dispatch(getUserPage(param.userId))
         } else {
             navigate(-1)
         }
-    }, [])
+    },[param.userId])
 
 
-    const UserProfile = useSelector<AppRootStateType, UserProfileType | null>(state => state.profilePage.UserProfile)
 
-    const UserFollow = useSelector<AppRootStateType, boolean>(state => state.profilePage.UserFollow)
 
 
     const unFollow = () => {

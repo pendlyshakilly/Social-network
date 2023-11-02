@@ -20,6 +20,7 @@ const rootReducers = combineReducers({
 const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunkMiddleware)))
 
 export type AppRootStateType = ReturnType<typeof rootReducers>
+
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
 export type AppThunk<ReturnType = Promise<any> | void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
