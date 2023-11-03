@@ -6,11 +6,13 @@
 .UsersContainer {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .User {
     padding: 10px;
     margin: 6px;
-    min-width: 150px;
+    min-width: 250px;
+    min-height: 250px;
 }
 

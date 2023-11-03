@@ -1,12 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './MyProfile.module.css'
 import Avatar from "@mui/material/Avatar";
 import {Button, Paper} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, AppRootStateType} from "../../../State/Store";
-import {getFriends, UserPageType, UserType} from "../../../State/Users-reducer";
+import {getFriends, UserType} from "../../../State/Users-reducer";
 import User from "../../Users/User/User";
 import DescriptionBlock from "../../Utils/DecriptionBlock/DescriptionBlock";
+import ClearIcon from '@mui/icons-material/Clear';
 
 const MyProfile = () => {
     const friends = useSelector<AppRootStateType, UserType[]>(state => state.userPage.friends)
@@ -41,8 +42,8 @@ const MyProfile = () => {
                 <div className={s.ContainerDescription}>
                     <DescriptionBlock/>
                         <Paper elevation={4} className={s.FriendsContainer}>
-                            {friends.slice(0, 6).map((el: UserType) => <div className={s.User}>
-                                    <User id={el.id} status={el.status}
+                            {friends.slice(0, 3).map((el: UserType) => <div className={s.User}>
+                                <User id={el.id} status={el.status}
                                           photos={el.photos}
                                           name={el.name}
                                           followed={el.followed}/>

@@ -1,16 +1,43 @@
 .User {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
     padding: 10px;
     margin: 6px;
     min-width: 150px;
+    height: 230px;
 }
 
-.UnFollow {
-    background-color: #a8a8a8;
-    border: none;
-    color: black;
+.Button {
+    border: 1.5px solid #1976d2;
+    background-color: white;
+    border-radius: 35px;
+    width: 95%;
+    height: 40px;
+    cursor: pointer;
+    transition: background-color 300ms ease-out 10ms;
 }
 
-.Follow {
-    background-color: #3030ff;
-    border: none;
+.Button:hover {
+    background-color: #1976d2;
+}
+
+.Button a {
+    text-decoration: none;
+    color: #1976d2;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.Button:hover a {
+    color: white;
+}
+
+
+.Avatar{}
+.Avatar:hover{
+    transition-duration: 500ms;
+    transform: scale(1.1);
+
 }

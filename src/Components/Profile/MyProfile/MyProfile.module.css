@@ -34,6 +34,7 @@
 
 .FriendsContainer{
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     width: 100%;
     margin-left: 20px;
@@ -48,8 +49,14 @@
 }
 
 .User {
-    margin: 0 40px 0 10px;
-    min-width: 150px;
+    min-width: 33.33%;
+    height: 88.5%;
+    padding-top: 6%;
+}
+
+.User:hover{
+    background-color: rgba(218, 218, 218, 0.38);
+
 }
 
 

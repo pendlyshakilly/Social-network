@@ -65,7 +65,7 @@ export const findUser = (userName: string): AppThunk => (dispatch, getState) => 
 
 const initialState: UserPageType = {
     users: [],
-    pageSize: 50,
+    pageSize: 24,
     TotalCount: 0,
     currentPage: 1,
     isFetching: true,

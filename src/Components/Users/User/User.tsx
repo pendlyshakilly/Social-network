@@ -17,28 +17,15 @@ type PropsType = {
 
 
 const User = React.memo(({id, status, photos, name, followed, ...props}: PropsType) => {
-    const dispatch = useDispatch<AppDispatch>()
-    const disabledMode = useSelector<AppRootStateType, [] | number[]>(state => state.userPage.disabledMode)
 
-    const follow = () => {
-        dispatch(Follow(id, true))
-    }
-    const Unfollow = () => {
-        dispatch(Follow(id, false))
-    }
     return <div key={id} className={s.User}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <NavLink to={'/user-profile/' + id}>
-           <Avatar sx={{width: '50px', height: '50px'}} src={photos.small == null ? 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png' : photos.small}/>
+           <Avatar className={s.Avatar} sx={{width: '80px', height: '80px'}} src={photos.small ? photos.small : ''}/>
         </NavLink>
-        <div>{name}</div>
-        <div>
-            {followed ?
-                <Button disabled={disabledMode.some(i => i === id)} sx={{borderRadius: '10px'}} onClick={Unfollow}
-                        className={s.UnFollow} variant={'contained'}>Un Follow</Button> :
-                <Button onClick={follow} disabled={disabledMode.some(i => i === id)}
-                        className={s.Follow} sx={{borderRadius: '10px'}} variant={'contained'}>Follow</Button>
-            }
+        <h3>{name}</h3>
         </div>
+        <button className={s.Button}><NavLink to={'/user-profile/' + id} >View Profile</NavLink></button>
     </div>
 })
 
