@@ -1,10 +1,6 @@
 import React from 'react';
 import s from "./User.module.css";
-import {NavLink} from "react-router-dom";
-import {Button} from "@mui/material";
-import {Follow} from "../../../State/Users-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, AppRootStateType} from "../../../State/Store";
+import {NavLink, useNavigate} from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 
 type PropsType = {
@@ -17,6 +13,7 @@ type PropsType = {
 
 
 const User = React.memo(({id, status, photos, name, followed, ...props}: PropsType) => {
+const navigate = useNavigate()
 
     return <div key={id} className={s.User}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -25,7 +22,7 @@ const User = React.memo(({id, status, photos, name, followed, ...props}: PropsTy
         </NavLink>
         <h3>{name}</h3>
         </div>
-        <button className={s.Button}><NavLink to={'/user-profile/' + id} >View Profile</NavLink></button>
+        <button onClick={() => navigate('/user-profile/' + id)} className={s.Button}><a>View Profile</a></button>
     </div>
 })
 

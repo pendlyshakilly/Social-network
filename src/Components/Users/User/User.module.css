@@ -15,8 +15,8 @@
     border-radius: 35px;
     width: 95%;
     height: 40px;
-    cursor: pointer;
     transition: background-color 300ms ease-out 10ms;
+    cursor: pointer;
 }
 
 .Button:hover {

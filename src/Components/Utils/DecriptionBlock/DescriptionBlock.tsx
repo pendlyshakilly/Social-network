@@ -41,7 +41,7 @@ const DescriptionBlock = () => {
                             <DescriptionIcon/>
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Status" sx={{color: 'black'}}
+                    <ListItemText primary="AddStatus" sx={{color: 'black'}}
                                   secondaryTypographyProps={{color: 'black'}} secondary="Hijbi228"/>
                 </ListItem>
                 <Divider variant="inset" component="li"/>

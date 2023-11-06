@@ -48,10 +48,10 @@ const Navbar = () => {
                 </div>
             </div>
             {searchMode &&
-
-                <Search onClickAway={() => {setSearchMode(false)}}/>
-
-                    }
+                <Search onClickAway={() => {
+                    setSearchMode(false)
+                }}/>
+            }
         </nav>
     </div>
 }

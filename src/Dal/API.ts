@@ -1,5 +1,4 @@
 import axios from "axios";
-import {isRouteErrorResponse} from "react-router-dom";
 
 
 const instance = axios.create({
@@ -30,17 +29,25 @@ export const UsersAPI = {
     findUser (userName: string){
         return instance.get(`users?term=${userName}`)
             .then(response => response.data)
+    },
+    startChat (userId: string){
+        return instance.put(`dialogs/${userId}`)
+            .then(response => response.data)
+    },
+    sendMessage (userId: string){
+      return instance.post(`dialogs/${userId}/messages`, {body: 'hello friend'})
+          .then(response => response.data)
     }
 }
 
 
 export const ProfileAPI = {
-    getProfile(userId: string){
+    getProfile(userId: string | number){
         return instance.get(`profile/${userId}`)
             .then(response => response.data)
             .catch(error => alert(error))
     },
-    getStatus(userId: string){
+    getStatus(userId: string | number){
         return instance.get('/profile/status/' + userId)
     },
     updateStatus(status: string){

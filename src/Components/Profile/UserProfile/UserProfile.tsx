@@ -35,6 +35,9 @@ const UserProfile = () => {
         if (UserProfile)
             dispatch(Follow(UserProfile.userId, true))
     }
+
+
+
     return (
         <div className={s.UserProfileContainer}>
             <div className={s.ImageContainer}>

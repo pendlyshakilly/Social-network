@@ -1,4 +1,4 @@
-.searchContainer{
+.searchWrapper{
     background-color: whitesmoke;
     position: absolute;
     width: 300px;
@@ -7,30 +7,40 @@
     left: 65px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.33);
     top: -50px;
-    overflow: auto;
     border-right: rgba(0, 0, 0, 0.12);
 }
-
-.searchContainer::-webkit-scrollbar{
-    width: 12px;
-    height: 50%;
-}
-.searchContainer::-webkit-scrollbar-track {
-    background: whitesmoke;        /* color of the tracking area */
-}
-
-.searchContainer::-webkit-scrollbar-thumb {
-    background-color: #CED0D4;    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 3px solid #c9c9c9;  /* creates padding around scroll thumb */
+.searchContainer{
+    scroll-margin-block: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .search{
     margin-top: 54px;
 }
 
+
 .responseContainer{
+    overflow-y: auto;
+    height: 80%;
 }
+.responseContainer::-webkit-scrollbar{
+    width: 12px;
+    height: 50%;
+}
+.responseContainer::-webkit-scrollbar-track {
+    background: whitesmoke;
+}
+.responseContainer::-webkit-scrollbar-thumb {
+    background-color: #CED0D4;
+    border-radius: 20px;
+    border: 3px solid #c9c9c9;
+}
+
+
+
+
 .usersResponse{
     display: flex;
     width: 94%;

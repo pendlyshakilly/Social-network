@@ -59,8 +59,8 @@ const Search = (props: SearchPropsType) => {
 
 
     return (
-        <div className={s.searchContainer}>
-            <div style={{scrollMarginBlock: '0', display: 'flex', flexDirection: 'column'}}>
+        <div className={s.searchWrapper}>
+            <div className={s.searchContainer}>
                 <div className={s.searchBlockContainer}
                      style={foundUsers.length !== 0 ? {height: '150px'} : {height: '180px'}}>
                     <div className={s.search}>
