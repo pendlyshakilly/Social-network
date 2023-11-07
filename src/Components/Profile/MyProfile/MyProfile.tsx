@@ -12,9 +12,9 @@ import {getMyProfile, MyProfileType} from "../../../State/Profile-reducer";
 
 const MyProfile = () => {
     const friends = useSelector<AppRootStateType, UserType[]>(state => state.userPage.friends)
-    const myProfile = useSelector<AppRootStateType, MyProfileType | null>(state => state.profilePage.MyProfile)
+    const myProfile = useSelector<AppRootStateType, MyProfileType>(state => state.profilePage.MyProfile)
     const dispatch = useDispatch<AppDispatch>()
-    const [mode, setMode] = useState(true)
+    const [mode, setMode] = useState(false)
 
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const MyProfile = () => {
                         </div>
                     </div>
                      <Dialog open={mode} maxWidth={false}>
-                        <ModifyWindow myProfile={myProfile}/>
+                        <ModifyWindow/>
                     </Dialog>
                     <div>
                         <Button variant={'contained'} sx={{borderRadius: '5px'}} onClick={() => setMode(true)}>Modifier Profile</Button>

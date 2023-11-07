@@ -1,5 +1,6 @@
 import {AppThunk} from "./Store";
 import {ProfileAPI} from "../Dal/API";
+import myProfile from "../Components/Profile/MyProfile/MyProfile";
 
 const USER_PROFILE_TYPE = 'USER_PAGE' as const
 const SET_USER_STATUS_TYPE = 'SET_USER_STATUS' as const
@@ -7,7 +8,7 @@ const SET_USER_FOLLOWED_STATUS_TYPE = 'SET_USER_FOLLOWED_STATUS_TYPE' as const
 const SET_MY_PROFILE_TYPE = 'SET_MY_PROFILE_TYPE' as const
 
 type setUserPageType = ReturnType<typeof setUserPage>
-type setUserStatusSuccessType = ReturnType<typeof setMyStatusSuccess>
+type setUserStatusSuccessType = ReturnType<typeof setMyStatus>
 type setUserFollowedType = ReturnType<typeof setUserFollow>
 type setMyProfileType = ReturnType<typeof setMyProfile>
 export type ProfileActionsType = setUserPageType | setUserStatusSuccessType | setUserFollowedType | setMyProfileType
@@ -15,17 +16,9 @@ export type ProfileActionsType = setUserPageType | setUserStatusSuccessType | se
 
 export const setUserPage = (data: UserProfileType) => ({type: USER_PROFILE_TYPE, data} as const)
 export const setUserFollow = (status: boolean) => ({type: SET_USER_FOLLOWED_STATUS_TYPE, status} as const)
-export const setMyStatusSuccess = (status: string) => ({type: SET_USER_STATUS_TYPE, status} as const)
+export const setMyStatus = (status: string) => ({type: SET_USER_STATUS_TYPE, status} as const)
 export const setMyProfile = (myProfile: MyProfileType) => ({type: SET_MY_PROFILE_TYPE, myProfile} as const)
 
-export const setMyStatus = (status: string): AppThunk => (dispatch) => {
-    ProfileAPI.updateStatus(status)
-        .then(res => {
-
-            dispatch(setMyStatusSuccess(status))
-        })
-        .catch(e => alert(e))
-}
 
 export const getUserPage = (userId: string): AppThunk => (dispatch) => {
     let getProfile = ProfileAPI.getProfile(userId).then(response => response)
@@ -44,10 +37,19 @@ export const getMyProfile = (): AppThunk => (dispatch, getState) => {
         let getStatus = ProfileAPI.getStatus(userId)
         let getProfile = ProfileAPI.getProfile(userId).then(response => response)
         Promise.all([getStatus, getProfile]).then((res: any) => {
-            dispatch(setMyStatusSuccess(res[0].data))
+            dispatch(setMyStatus(res[0].data))
             dispatch(setMyProfile(res[1]))
         })
     }
+}
+export const updateMyProfile = (myProfile: MyProfileType, myStatus: string, myPhoto: string): AppThunk => (dispatch) => {
+        let updateStatus = ProfileAPI.updateStatus(myStatus)
+        let updateProfile = ProfileAPI.updateProfile(myProfile)
+        let updatePhoto = ProfileAPI.updatePhoto(myStatus.trim() === '' ? null : myPhoto)
+
+    Promise.all([updateStatus, updateProfile, updatePhoto]).then(res => {
+       dispatch(getMyProfile())
+    })
 }
 
 
@@ -55,7 +57,22 @@ const initialState: ProfilePageType = {
     UserProfile: null,
     MyStatus: '',
     UserFollow: false,
-    MyProfile: null
+    MyProfile: {
+        aboutMe: null,
+        contacts: {
+            facebook: null,
+            youtube: null,
+            github: null,
+            twitter: null,
+            instagram: null,
+            mainLink: null,
+            website: null,
+            vk: null,
+        },
+        fullName: null,
+        lookingForAJob: false,
+        lookingForAJobDescription: null
+    }
 }
 
 const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
@@ -79,7 +96,7 @@ export type ProfilePageType = {
     UserProfile: UserProfileType | null
     MyStatus: string
     UserFollow: boolean,
-    MyProfile: MyProfileType | null
+    MyProfile: MyProfileType
 }
 
 export type MyProfileType = {
@@ -96,7 +113,8 @@ export type MyProfileType = {
     }
     lookingForAJob: boolean
     lookingForAJobDescription: null | string
-    fullName: null | string,}
+    fullName: null | string,
+}
 
 export type UserProfileType = {
     aboutMe: null

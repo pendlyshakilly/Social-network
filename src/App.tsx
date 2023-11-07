@@ -26,9 +26,6 @@ const App = React.memo(() => {
         dispatch(SetSearchMode(false))
     }
 
-
-    console.log('App render')
-
     return (
         <div>
             <header onClick={onClickChangeModeHandler}>

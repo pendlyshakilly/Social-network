@@ -1,4 +1,5 @@
 import axios from "axios";
+import {MyProfileType} from "../State/Profile-reducer";
 
 
 const instance = axios.create({
@@ -50,11 +51,18 @@ export const ProfileAPI = {
     getStatus(userId: string | number){
         return instance.get('/profile/status/' + userId)
     },
-    updateStatus(status: string){
+    updateStatus(status: string | null){
         return instance.put('/profile/status/', {status})
     },
     getUserFollow(userId: string){
         return instance.get(`follow/${userId}`)
+    },
+    updateProfile(profile: MyProfileType){
+        return instance.put('/profile', profile)
+            .then(response => response.data)
+    },
+    updatePhoto(photo: string | null){
+        return instance.put('/profile/photo', {image: photo})
     }
 }
 
