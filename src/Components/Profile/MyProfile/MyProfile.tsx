@@ -17,10 +17,16 @@ const MyProfile = () => {
     const [mode, setMode] = useState(false)
 
 
+
     useEffect(() => {
         dispatch(getFriends())
         dispatch(getMyProfile())
     }, [])
+
+    const onClickCloseHandler = () => {
+      setMode(false)
+    }
+
 
     return (
         <div className={s.MyProfile}>
@@ -32,14 +38,14 @@ const MyProfile = () => {
                     <div style={{display: "flex", alignItems: 'start'}}>
                         <div style={{width: '168px', height: '168px'}}>
                             <Avatar alt={'user'} sx={{width: '168px', height: '168px'}} className={s.Avatar}
-                                    src={'https://scontent.fcdg1-1.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&ccb=1-7&_nc_sid=2b6aad&_nc_ohc=VTT51jsf8n4AX8Dfpoq&_nc_ht=scontent.fcdg1-1.fna&oh=00_AfBTQWSQ6Mg0xFV6eMUHhbbDd9517uMJKdo6E3_YdLYhrQ&oe=65620AF8'}/>
+                                    src={myProfile.photos.small ? myProfile.photos.small : ''}/>
                         </div>
                         <div>
-                            <h1 style={{marginTop: '-7px', marginLeft: '10px'}}>Illia Pendlyshak</h1>
+                            <h1 style={{marginTop: '-7px', marginLeft: '10px'}}>{myProfile.fullName}</h1>
                         </div>
                     </div>
-                     <Dialog open={mode} maxWidth={false}>
-                        <ModifyWindow/>
+                    <Dialog open={mode} onClose={onClickCloseHandler} maxWidth={false}>
+                        <ModifyWindow closeModifyWindow={onClickCloseHandler}/>
                     </Dialog>
                     <div>
                         <Button variant={'contained'} sx={{borderRadius: '5px'}} onClick={() => setMode(true)}>Modifier Profile</Button>
@@ -47,15 +53,16 @@ const MyProfile = () => {
                 </div>
                 <div className={s.ContainerDescription}>
                     <DescriptionBlock/>
-                        <Paper elevation={4} className={s.FriendsContainer}>
-                            {friends.slice(0, 3).map((el: UserType) => <div className={s.User}>
+                    <Paper elevation={4} className={s.FriendsContainer}>
+                        {
+                            friends.slice(0, 3).map((el: UserType) => <div className={s.User}>
                                 <User id={el.id} status={el.status}
-                                          photos={el.photos}
-                                          name={el.name}
-                                          followed={el.followed}/>
-                                </div>
-                            )}
-                        </Paper>
+                                      photos={el.photos}
+                                      name={el.name}
+                                      followed={el.followed}/>
+                            </div>
+                        )}
+                    </Paper>
                 </div>
             </div>
         </div>

@@ -49,7 +49,7 @@ export const SetError = (error: string) => ({type: SET_ERROR_TYPE, error} as con
 export const SetSearchMode = (status: boolean) => ({type: SET_SEARCH_MODE, status} as const)
 export const InitializedSuccess = () => ({type: INITIALIZED_TYPE} as const)
 export const Initialized = (): AppThunk => (dispatch) => {
-    Promise.all([dispatch(GetUserDataAuth()), dispatch(getFriends())])
+    Promise.all([dispatch(GetUserDataAuth())])
         .then(() => {
             dispatch(InitializedSuccess())
         })

@@ -6,23 +6,20 @@
     display: none;
 }
 
-.AddIcon a{
+.ModifyWindowHeader{
     display: flex;
+    justify-content: space-between;
+    height: 50px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
     align-items: center;
-    cursor: pointer;
-    color: #1976d2;
+    background-color: whitesmoke;
 }
 
 
-.AddIcon a:hover{
-    text-decoration: underline;
-}
 
-.DescriptionPosition {
-    display: flex;
-    align-items: center;
-    height: 40px;
-}
+
 
 .Avatar{
   color: black;
@@ -33,4 +30,35 @@
     border-radius: 15px;
     box-shadow: 1px 1px 20px rgba(63, 63, 63, 0.49);
     text-decoration: underline black;
+}
+
+.Button{
+    border-radius: 40px;
+}
+
+.ClearIcon{
+    margin: 10px 20px 0 0;
+    cursor: pointer;
+    transition: all 250ms !important;
+    
+}
+.ClearIcon:hover{
+    rotate: -17deg;
+    color: rgba(63, 63, 63, 0.59);
+}
+
+.InputFile{
+    display: none;
+}
+
+.Label{
+    text-align: center;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    background-color: #2C3E50;
+    border-radius: 35px;
+    position: relative;
+    bottom: 30px;
+    left: 38px;
 }

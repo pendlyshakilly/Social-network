@@ -42,13 +42,13 @@ export const getMyProfile = (): AppThunk => (dispatch, getState) => {
         })
     }
 }
-export const updateMyProfile = (myProfile: MyProfileType, myStatus: string, myPhoto: string): AppThunk => (dispatch) => {
-        let updateStatus = ProfileAPI.updateStatus(myStatus)
-        let updateProfile = ProfileAPI.updateProfile(myProfile)
-        let updatePhoto = ProfileAPI.updatePhoto(myStatus.trim() === '' ? null : myPhoto)
-
+export const updateMyProfile = (myProfile: MyProfileType, myStatus: string, myPhoto: any): AppThunk => (dispatch) => {
+    let updateStatus = ProfileAPI.updateStatus(myStatus)
+    let updateProfile = ProfileAPI.updateProfile(myProfile)
+    let  updatePhoto = ProfileAPI.updatePhoto(myPhoto)
     Promise.all([updateStatus, updateProfile, updatePhoto]).then(res => {
-       dispatch(getMyProfile())
+        console.log(res)
+        dispatch(getMyProfile())
     })
 }
 
@@ -71,7 +71,11 @@ const initialState: ProfilePageType = {
         },
         fullName: null,
         lookingForAJob: false,
-        lookingForAJobDescription: null
+        lookingForAJobDescription: null,
+        photos: {
+            small: null,
+            large: null
+        }
     }
 }
 
@@ -114,6 +118,10 @@ export type MyProfileType = {
     lookingForAJob: boolean
     lookingForAJobDescription: null | string
     fullName: null | string,
+    photos: {
+        small: null | string,
+        large: null | string
+    }
 }
 
 export type UserProfileType = {

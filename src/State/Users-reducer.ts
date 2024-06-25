@@ -35,6 +35,7 @@ const FollowUnFollowUtil = async (dispatch: any, apiMethod: any, id: number, sta
         dispatch(SetDisable(false, id))
     }
 }
+
 export const Follow = (id: number, status: boolean): AppThunk => (dispatch) => {
     if (status) {
         FollowUnFollowUtil(dispatch, UsersAPI.follow.bind(UsersAPI), id, status).catch(error => alert(error))
@@ -55,7 +56,7 @@ export const findUser = (userName: string): AppThunk => (dispatch, getState) => 
         dispatch(DeleteError(error))
         dispatch(FoundUsers(res.items))
         if (res.items.length === 0){
-            if (!getState().initialized.errors.some(el => el === 'UserNotFound')) {
+            if (!getState().initialized.errors.some(el => el === error)) {
                 dispatch(SetError(error))
             }
         }

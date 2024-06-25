@@ -6,7 +6,6 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import {OverridableComponent} from "@mui/material/OverridableComponent";
 import {MyProfileType} from "../../../../../State/Profile-reducer";
-import ClearIcon from '@mui/icons-material/Clear';
 
 type EditableFieldContactsType = {
     property: any,
@@ -20,7 +19,6 @@ type EditableFieldContactsType = {
 const EditableFieldContacts = (props: EditableFieldContactsType) => {
     const [mode, setMode] = useState<string[]>([])
     const [value, setValue] = useState<string>('')
-    const [property, setProperty] = useState(props.property)
 
 
     const onClickHandler = (prop?: null) => {
@@ -29,13 +27,13 @@ const EditableFieldContacts = (props: EditableFieldContactsType) => {
             ...props.profileDemo,
             contacts: {
                 ...props.profileDemo.contacts,
-                [props.modeWord]: prop && `https://www.${props.modeWord}.com/` + value
+                [props.modeWord]: prop === null ? null : `https://www.${props.modeWord}.com/` + value
             }
         })
     }
 
     return (
-        <div style={{display: 'flex', alignItems: 'center', margin: '10px 0 10px 0', height: '40px'}}>
+        <div style={{display: 'flex', alignItems: 'center', margin: '10px 0 10px 0', minHeight: '40px'}}>
             <Avatar style={props.style} sx={{marginRight: '5px'}}>
                 <props.icon fontSize={'medium'}/>
             </Avatar>
@@ -46,30 +44,31 @@ const EditableFieldContacts = (props: EditableFieldContactsType) => {
                            }}
                            onBlur={() => onClickHandler()}
                            id="outlined-basic" label='Type your nickname'
-                           defaultValue={value.trim() !== '' ? value : property && property.split('/')[3]}
+                           defaultValue={value.trim() !== '' ? value : props.property && props.property.split('/')[3]}
                            variant='outlined'
                 />
                 :
                 <div className={s.AddIcon}>
                     {value.trim() !== '' ?
-                        <a style={{color: 'black'}} onClick={() => setMode([props.modeWord])}>
-                            <span style={{margin: '0 5px 0 5px', fontSize: '20px'}}>{value}</span>
-                            <EditIcon className={s.Avatar}/>
-                        </a>
+                            <a style={{color: 'black'}} onClick={() => setMode([props.modeWord])}>
+                                <span style={{
+                                    margin: '0 5px 0 5px',
+                                    fontSize: '20px',
+                                    maxWidth: '90%',
+                                    wordWrap: 'break-word'
+                                }}>{value}</span>
+                                <EditIcon className={s.Avatar}/>
+                            </a>
                         :
-                        property ?
-                            <a className={s.AddIcon} style={{color: 'black'}}>
-                                <a style={{color: 'black'}} onClick={() => setMode([props.modeWord])}>
+                        props.property ?
+                            <a style={{color: 'black'}} onClick={() => setMode([props.modeWord])}>
                                     <span style={{
                                         margin: '0 10px 0 5px',
-                                        fontSize: '20px'
-                                    }}>{property.split('/')[3]}</span>
-                                    <EditIcon sx={{marginRight: '10px'}} className={s.Avatar}/>
-                                </a>
-                                <ClearIcon className={s.Avatar} onClick={() => {
-                                    setProperty(null)
-                                    onClickHandler(null)
-                                }}/>
+                                        fontSize: '20px',
+                                        maxWidth: '90%',
+                                        wordWrap: 'break-word'
+                                    }}>{props.property.split('/')[3]}</span>
+                                <EditIcon sx={{marginRight: '10px'}} className={s.Avatar}/>
                             </a>
                             :
                             <a style={{display: 'flex'}} onClick={() => setMode([props.modeWord])}>

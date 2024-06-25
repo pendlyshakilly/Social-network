@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, AppRootStateType} from "../../../State/Store";
 import {Follow} from "../../../State/Users-reducer";
 import {useNavigate, useParams} from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 
 const UserProfile = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -21,10 +22,7 @@ const UserProfile = () => {
         } else {
             navigate(-1)
         }
-    },[param.userId])
-
-
-
+    }, [param.userId])
 
 
     const unFollow = () => {
@@ -37,16 +35,22 @@ const UserProfile = () => {
     }
 
 
-
     return (
         <div className={s.UserProfileContainer}>
-            <div className={s.ImageContainer}>
-                <img
-                    src={UserProfile?.photos.small ? UserProfile.photos.small : 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'}/>
-            </div>
-            <div>
+            <div className={s.ContainerHeader}>
+                <div className={s.BigImg}>
+                    <img src={''}/>
+                </div>
+                <div className={s.Container}>
+                <div style={{display: 'flex', alignItems: 'end'}}>
+                    <div className={s.ImageContainer}>
+                        <Avatar alt={'user'} sx={{width: '168px', height: '168px'}} className={s.Avatar}
+                            src={UserProfile?.photos.small ? UserProfile.photos.small : ''}/>
+                    </div>
+                    <div style={{margin: '0 50px 0 0'}}><h1 style={{margin: '0'}}>{UserProfile?.fullName}</h1></div>
+                </div>
+
                 <div className={s.Navigate}>
-                    <div><h1>{UserProfile?.fullName}</h1></div>
                     {UserFollow ?
                         <Button sx={{margin: '0px 20px 0px 20px', borderRadius: '10px'}}
                                 variant={'contained'} onClick={unFollow}>UnFollow</Button>
@@ -56,11 +60,11 @@ const UserProfile = () => {
                     }
                     <Button sx={{borderRadius: '10px'}} variant={'contained'}>Message</Button>
                 </div>
-                <div><h3>{!UserProfile?.aboutMe ? 'AboutMe' : UserProfile?.aboutMe}</h3></div>
-                <div>{UserProfile?.status ? UserProfile?.status : 'Status'}</div>
             </div>
         </div>
-    );
+</div>
+)
+    ;
 };
 
 

@@ -10,12 +10,38 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InfoIcon from '@mui/icons-material/Info';
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../../../State/Store";
+import {MyProfileType} from "../../../State/Profile-reducer";
+import SearchIcon from "@mui/icons-material/Search";
+
+type ContactType = {contact: 'facebook' | 'instagram' | 'twitter' | 'github' | 'youtube', style: {}, icon: any}
+
 
 const DescriptionBlock = () => {
     let style = {
         background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)',
         cursor: 'pointer'
     }
+    let myProfile = useSelector<AppRootStateType, MyProfileType>(state => state.profilePage.MyProfile)
+    let status = useSelector<AppRootStateType, string>(state => state.profilePage.MyStatus)
+
+
+
+
+    let description = [
+        {property: myProfile.aboutMe, icon: InfoIcon, text: 'About Me'},
+        {property: status, icon: DescriptionIcon, text: 'Add Status'},
+        {property: myProfile.lookingForAJobDescription, icon: HomeRepairServiceIcon, text: 'Job description'}
+    ]
+    let contacts: ContactType[] = [
+        {contact: 'instagram', style: style, icon: InstagramIcon},
+        {contact: 'facebook', style: {backgroundColor: '#1778F2', cursor: 'pointer'}, icon: FacebookOutlinedIcon},
+        {contact: 'twitter', style: {backgroundColor: 'white', cursor: 'pointer'}, icon: TwitterIcon},
+        {contact: 'github', style: {backgroundColor: 'black', cursor: 'pointer'}, icon: GitHubIcon},
+        {contact: 'youtube', style: {backgroundColor: 'white', cursor: 'pointer'}, icon: YouTubeIcon},
+    ]
+    myProfile.lookingForAJob && description.push({property: '', icon: SearchIcon, text: 'Search a job'})
 
     return (
         <Paper elevation={4} sx={{
@@ -25,75 +51,37 @@ const DescriptionBlock = () => {
             paddingRight: '10px'
         }}>
             <List>
+                {description.map(el => {
+                    return <>
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <el.icon/>
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={el.text} sx={{color: 'black'}}
+                                          secondaryTypographyProps={{color: 'black'}} secondary={el.property}/>
+                        </ListItem>
+                        <Divider variant="inset" component="li"/>
+                    </>
+                })}
                 <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <InfoIcon/>
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="About Me" sx={{color: 'black'}}
-                                  secondaryTypographyProps={{color: 'black'}} secondary="célibataire"/>
-                </ListItem>
-                <Divider variant="inset" component="li"/>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <DescriptionIcon/>
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="AddStatus" sx={{color: 'black'}}
-                                  secondaryTypographyProps={{color: 'black'}} secondary="Hijbi228"/>
-                </ListItem>
-                <Divider variant="inset" component="li"/>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <HomeRepairServiceIcon/>
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Work" secondaryTypographyProps={{color: 'black'}}
-                                  secondary="I found the job, and i am good man and cool software ingeniere"/>
-                </ListItem>
-                <Divider variant="inset" component="li"/>
-                <ListItem>
-                    <h3 style={{marginBottom: '0px'}}>Other social media:</h3>
+                    <h3 style={{marginBottom: '0px'}}>Social media:</h3>
                 </ListItem>
                 <ListItem>
-                    <a href={'https://www.instagram.com/illia_3562'}>
-                        <ListItemAvatar>
-                            <Avatar style={style}>
-                                <InstagramIcon fontSize={'medium'}/>
-                            </Avatar>
-                        </ListItemAvatar>
-                    </a>
-                    <a href={'https://www.facebook.com/profile.php?id=61552232962671'}>
-                        <ListItemAvatar>
-                            <Avatar sx={{backgroundColor: '#1778F2', cursor: 'pointer'}}>
-                                <FacebookOutlinedIcon fontSize={'medium'}/>
-                            </Avatar>
-                        </ListItemAvatar>
-                    </a>
-                    <a>
-                        <ListItemAvatar>
-                            <Avatar sx={{backgroundColor: 'white', cursor: 'pointer'}}>
-                                <TwitterIcon fontSize={'large'} sx={{color: '#1DA1F2'}}/>
-                            </Avatar>
-                        </ListItemAvatar>
-                    </a>
-                    <a href={'https://github.com/pendlyshakilly'}>
-                        <ListItemAvatar>
-                            <Avatar sx={{backgroundColor: 'black', cursor: 'pointer'}}>
-                                <GitHubIcon fontSize={'medium'}/>
-                            </Avatar>
-                        </ListItemAvatar>
-                    </a>
-                    <a href={'https://www.youtube.com/channel/UCRy9VAFAigYO9KdOsVMI_aA'}>
-                        <ListItemAvatar>
-                            <Avatar sx={{backgroundColor: 'white', cursor: 'pointer'}}>
-                                <YouTubeIcon fontSize={'large'} sx={{color: 'red'}}/>
-                            </Avatar>
-                        </ListItemAvatar>
-                    </a>
+                    {contacts.map((el: ContactType) => {
+                        if(myProfile.contacts[el.contact]){
+                        return <a href={myProfile.contacts[el.contact] ? `${myProfile.contacts[el.contact]}` : ''} target={'_blank'}>
+                            <ListItemAvatar>
+                                <Avatar style={el.style}>
+                                    <el.icon fontSize={'medium'}/>
+                                </Avatar>
+                            </ListItemAvatar>
+                        </a>
+                        }
+                        else{
+                        return null
+                        }})}
                 </ListItem>
             </List>
         </Paper>

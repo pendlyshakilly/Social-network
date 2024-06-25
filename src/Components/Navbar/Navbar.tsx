@@ -11,6 +11,7 @@ import {AppDispatch, AppRootStateType} from "../../State/Store";
 import {AppInitialStateType, SetSearchMode} from "../../State/App-reducer";
 
 
+
 const Navbar = () => {
 
     const {searchMode} = useSelector<AppRootStateType, AppInitialStateType>(state => state.initialized)

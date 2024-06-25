@@ -1,20 +1,59 @@
 .UserProfileContainer{
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 86%;
+    margin: 0 auto;
 }
 
 .ImageContainer{
     margin-right: 100px;
+    width: 168px;
+    height: 168px;
 }
 
-.ImageContainer img{
-    width: 200px;
-    height: 200px;
-    border-radius: 130px;
-}
 
 .Navigate{
     display: flex;
     align-items: center;
+}
+
+.Avatar{
+    border: 4px solid white;
+    width: 168px;
+    height: 168px;
+}
+
+.BigImg{
+    width: 100%;
+    height: 40vh;
+    background-color: #e5e5e5;
+    background-image: linear-gradient(#e5e5e5 200px, rgba(0, 0, 0, 0.57));
+    border-radius: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.ContainerHeader{
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+    height: 100px;
+    position: relative;
+}
+
+
+
+.Container{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    width: 100%;
+    margin: 0 2% 0 2%;
+    position: relative;
+    bottom: 110px;
+    z-index: 2;
+
 }
