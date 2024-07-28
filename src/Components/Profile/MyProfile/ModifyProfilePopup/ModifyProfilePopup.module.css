@@ -17,7 +17,18 @@
     background-color: whitesmoke;
 }
 
+.SpanDescription{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+}
 
+.SpanDescription:hover{
+    background-color: whitesmoke;
+}
 
 
 
@@ -34,17 +45,22 @@
 
 .Button{
     border-radius: 40px;
+    transition: all 300ms !important;
+}
+.Button:hover{
+    background-color: #1976d2 !important;
+    color: white !important;
 }
 
+
 .ClearIcon{
-    margin: 10px 20px 0 0;
+    margin: 5px 20px 0 0;
     cursor: pointer;
     transition: all 250ms !important;
-    
+    border-radius: 25px;
 }
 .ClearIcon:hover{
-    rotate: -17deg;
-    color: rgba(63, 63, 63, 0.59);
+    background-color: rgba(63, 63, 63, 0.42);
 }
 
 .InputFile{
@@ -61,4 +77,10 @@
     position: relative;
     bottom: 30px;
     left: 38px;
+}
+.AddIconScale{
+    transition: all 250ms !important;
+}
+.SpanDescription:hover .AddIconScale{
+    transform: scale(1.1);
 }

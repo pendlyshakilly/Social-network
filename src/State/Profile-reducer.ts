@@ -106,7 +106,7 @@ export type ProfilePageType = {
 export type MyProfileType = {
     aboutMe: null | string
     contacts: {
-        facebook: null | string
+        facebook: string | null
         github: null | string
         instagram: null | string
         mainLink: null | string
@@ -117,7 +117,7 @@ export type MyProfileType = {
     }
     lookingForAJob: boolean
     lookingForAJobDescription: null | string
-    fullName: null | string,
+    fullName: null | string
     photos: {
         small: null | string,
         large: null | string

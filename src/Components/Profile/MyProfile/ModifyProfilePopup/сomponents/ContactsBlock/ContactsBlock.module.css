@@ -1,0 +1,19 @@
+.AddContactsBlock {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 2px 0 2px 0;
+}
+
+.AddContactsBlock:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.AddIconScale {
+    transition: all 250ms !important;
+}
+
+.AddContactsBlock:hover .AddIconScale {
+    transform: scale(1.1);
+}

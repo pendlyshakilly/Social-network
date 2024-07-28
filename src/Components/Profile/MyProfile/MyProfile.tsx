@@ -7,7 +7,7 @@ import {AppDispatch, AppRootStateType} from "../../../State/Store";
 import {getFriends, UserType} from "../../../State/Users-reducer";
 import User from "../../Users/User/User";
 import DescriptionBlock from "../../Utils/DecriptionBlock/DescriptionBlock";
-import ModifyWindow from "./ModifyWindow/ModifyWindow";
+import ModifyProfilePopup from "./ModifyProfilePopup/ModifyProfilePopup";
 import {getMyProfile, MyProfileType} from "../../../State/Profile-reducer";
 
 const MyProfile = () => {
@@ -45,7 +45,7 @@ const MyProfile = () => {
                         </div>
                     </div>
                     <Dialog open={mode} onClose={onClickCloseHandler} maxWidth={false}>
-                        <ModifyWindow closeModifyWindow={onClickCloseHandler}/>
+                        <ModifyProfilePopup closeModifyWindow={onClickCloseHandler}/>
                     </Dialog>
                     <div>
                         <Button variant={'contained'} sx={{borderRadius: '5px'}} onClick={() => setMode(true)}>Modifier Profile</Button>

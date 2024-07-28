@@ -1,4 +1,4 @@
-.SpanDescription{
+.SpanDescription {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -7,11 +7,11 @@
     cursor: pointer;
 }
 
-.SpanDescription:hover{
+.SpanDescription:hover {
     background-color: whitesmoke;
 }
 
-.AddIcon a{
+.AddIcon a {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -19,26 +19,36 @@
 }
 
 
-.AddIcon a:hover{
+.AddIcon a:hover {
     text-decoration: underline;
 }
+
+
 
 
 .DescriptionPosition {
     display: flex;
     align-items: center;
     min-height: 40px;
-
 }
 
-.SaveIcon{
+.SaveIcon {
     position: relative;
     left: 5px;
     cursor: pointer;
     border-radius: 25px;
     transition: background-color 400ms !important;
 }
-.SaveIcon:hover{
+
+.SaveIcon:hover {
     background-color: #2C3E50;
     color: whitesmoke;
+}
+
+.AddIconScale {
+    transition: all 250ms !important;
+}
+
+.SpanDescription:hover .AddIconScale {
+    transform: scale(1.1);
 }
