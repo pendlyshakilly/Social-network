@@ -1,13 +1,9 @@
 import React, {ChangeEvent, useState} from 'react';
-import {Button, Paper, Switch} from "@mui/material";
+import {Backdrop, Button, ButtonOwnProps, Paper, Switch} from "@mui/material";
 import s from './ModifyProfilePopup.module.css'
 import Avatar from "@mui/material/Avatar";
-import InfoIcon from "@mui/icons-material/Info";
-import DescriptionIcon from "@mui/icons-material/Description";
-import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import SearchIcon from '@mui/icons-material/Search';
 import {MyProfileType, updateMyProfile} from "../../../../State/Profile-reducer";
-import BadgeIcon from '@mui/icons-material/Badge';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, AppRootStateType} from "../../../../State/Store";
@@ -15,11 +11,7 @@ import DescriptionBlock from "./сomponents/DescriptionBlock/DescriptionBlock";
 import ContactsBlock from "./сomponents/ContactsBlock/ContactsBlock";
 import CircularProgress from '@mui/material/CircularProgress';
 import ProfileDetailsEditPopup from "./сomponents/ProfileDetailsEditPopup/ProfileDetailsEditPopup";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import {Twitter} from "@mui/icons-material";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import YouTubeIcon from "@mui/icons-material/YouTube";
+import LinearProgress from '@mui/material/LinearProgress';
 
 type ModifyWindowPropsType = {
     closeModifyWindow: () => void
@@ -45,20 +37,28 @@ export enum SocialEnum {
     YOUTUBE = 'youtube'
 }
 
+export enum DescriptionEnum {
+    FULLNAME = 'fullName',
+    ABOUTME = 'aboutMe',
+    LOOKINGFORAJOBDESC = 'lookingForAJobDescription'
+}
+
 export type PopupType = 'desc' | 'contact'
 
 const ModifyProfilePopup = ({closeModifyWindow}: ModifyWindowPropsType) => {
     const status = useSelector<AppRootStateType, string>(state => state.profilePage.MyStatus)
     const myProfile = useSelector<AppRootStateType, MyProfileType>(state => state.profilePage.MyProfile)
+    const isLoading = useSelector<AppRootStateType, boolean>(state => state.initialized.isLoading)
     const dispatch = useDispatch<AppDispatch>()
 
 
     const [profileTemp, setProfileTemp] = useState<MyProfileType>(myProfile)
     const [statusTemp, setStatusTemp] = useState(status)
-    const [photo, setPhoto] = useState<{ url: string | null, blob: File | null }>({url: myProfile.photos.small, blob: null})
+    const [photo, setPhoto] = useState<{ url: string | null, blob: File | null }>({
+        url: myProfile.photos.small,
+        blob: null
+    })
     const [popupData, setPopupData] = useState<PopupDataType>({isOpen: false, type: null, inputText: null, mode: null})
-
-    let style = {background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)'}
 
 
     const onChangePhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -71,46 +71,9 @@ const ModifyProfilePopup = ({closeModifyWindow}: ModifyWindowPropsType) => {
         dispatch(updateMyProfile(profileTemp, statusTemp, photo.blob))
     }
 
-    const onClickCloseHandler = () => {
-        closeModifyWindow()
-    }
-    console.log(profileTemp)
 
-    let contacts = {
-        [SocialEnum.INSTAGRAM]: InstagramIcon,
-        [SocialEnum.GITHUB]: GitHubIcon,
-        [SocialEnum.TWITTER]: TwitterIcon,
-        [SocialEnum.YOUTUBE]: YouTubeIcon
-    }
-
-    /*const contacts:ContactType[] = [
-        {
-            link: profileTemp.contacts.instagram,
-            mode: SocialEnum.INSTAGRAM,
-            // style: style,
-            // icon: InstagramIcon
-        },
-        {
-            link: profileTemp.contacts.github,
-            mode: SocialEnum.GITHUB,
-            // style: {backgroundColor: 'black'},
-            // icon: GitHubIcon
-        },
-        {
-            link: profileTemp.contacts.twitter,
-            mode: SocialEnum.TWITTER,
-            // style: {backgroundColor: '#1778F2'},
-            // icon: TwitterIcon
-        },
-        {
-            link: profileTemp.contacts.youtube,
-            mode: SocialEnum.YOUTUBE,
-            // style: {backgroundColor: 'red'},
-            // icon: YouTubeIcon
-        }
-    ]*/
     const getSocialLink = (value: string | null): string | null => {
-        if(value === null) return null
+        if (value === null) return null
         if (value.includes('https://')) {
             return value
         } else {
@@ -119,27 +82,10 @@ const ModifyProfilePopup = ({closeModifyWindow}: ModifyWindowPropsType) => {
         return null
     }
 
-    const Description = [
-        {
-            property: profileTemp.fullName, modeWord: 'fullName',
-            text: 'Add your full name', icon: BadgeIcon, title: 'Full name'
-        },
-        {
-            property: profileTemp.aboutMe, modeWord: 'aboutMe',
-            text: 'Add information about you', icon: InfoIcon, title: 'About me'
-        },
-        {
-            property: statusTemp, modeWord: 'status',
-            text: 'Add your status', icon: DescriptionIcon, title: 'Status'
-        },
-        {
-            property: profileTemp.lookingForAJobDescription, modeWord: 'lookingForAJobDescription',
-            text: 'Add your job description', icon: HomeRepairServiceIcon, title: 'Job description'
-        },
-    ]
-    const  onSaveTempHandler = (value: string | null) => {
-        if(popupData.mode){
-            if (popupData.type === 'contact'){
+
+    const onSaveTempHandler = (value: string | null) => {
+        if (popupData.mode) {
+            if (popupData.type === 'contact') {
                 popupData.mode && setProfileTemp({
                     ...profileTemp,
                     contacts: {
@@ -147,32 +93,44 @@ const ModifyProfilePopup = ({closeModifyWindow}: ModifyWindowPropsType) => {
                         [popupData.mode]: getSocialLink(value)
                     }
                 })
-                setPopupData({...popupData, isOpen: false})
+                setPopupData({isOpen: false, type: null, inputText: null, mode: null})
             } else if (popupData.type === 'desc') {
                 if (popupData.mode === 'status') {
                     setStatusTemp(value === null ? '' : value)
+                    setPopupData({...popupData, isOpen: false})
                 } else {
                     setProfileTemp({
                         ...profileTemp,
                         contacts: {...profileTemp.contacts}, [popupData.mode]: value
                     })
+                    setPopupData({isOpen: false, type: null, inputText: null, mode: null})
                 }
             }
         }
-     }
+    }
+
 
     const setPopupDataHandler = (isOpen: boolean, type: PopupType | null, inputText: string | null, mode: string | null) => {
         setPopupData({isOpen, type, inputText, mode})
     }
 
+
     return <div className={s.ModifyWindow}>
         <Paper sx={{width: '60vh', height: '100%', position: 'relative'}}>
+            {isLoading && <Backdrop
+                sx={{width: '100%', color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                open={true}>
+                <CircularProgress color="inherit"/>
+            </Backdrop>}
             <Paper className={s.ModifyWindowHeader}>
-                <h2 style={{textAlign: 'center', marginLeft: '20px'}}>Modify profile</h2>
-                <div>
-                    <Button className={s.Button} onClick={onClickCloseHandler}>Cansel</Button>
-                    <Button className={s.Button} sx={{margin: '0px 15px 0px 10px'}}
-                            onClick={onClickSaveHandler}>Save</Button>
+                <div className={s.ModifyWindowHeaderContainer}>
+                    <h2 style={{textAlign: 'center', marginLeft: '20px'}}>Modify profile</h2>
+                    <div>
+                        <Button  className={s.Button} disabled={isLoading}
+                                onClick={() => closeModifyWindow()}>Cansel</Button>
+                        <Button className={s.Button} disabled={isLoading} sx={{margin: '0px 15px 0px 10px'}}
+                                onClick={onClickSaveHandler}>Save</Button>
+                    </div>
                 </div>
             </Paper>
             <div style={{
@@ -194,38 +152,30 @@ const ModifyProfilePopup = ({closeModifyWindow}: ModifyWindowPropsType) => {
                     {profileTemp.fullName ? profileTemp.fullName.length >= 43 ? profileTemp.fullName.substring(0, 43) + '...' : profileTemp.fullName : 'No Name'}
                 </h3>
             </div>
-            <CircularProgress size={'50px'} color={'primary'}/>
-            <div style={{marginLeft: '0px'}}>
-                {Description.map(el => {
-                    return <DescriptionBlock property={el.property}
-                                             setValue={(obj => {
-                                                      el.modeWord === 'status' ?
-                                                          typeof obj === "string" && setStatusTemp(obj)
-                                                          : typeof obj === "object" && setProfileTemp(obj)
-                                                  })}
-                                             icon={el.icon}
-                                             title={el.title}
-                                             text={el.text}
-                                             modeWord={el.modeWord}
-                                             profileTemp={profileTemp}
-                    />
-                })}
+
+            {/*<CircularProgress size={'50px'} color={'primary'} sx={{position: 'absolute', zIndex: '5', left: '40%'}}/>*/}
+            <div>
+                {
+                    [...Object.entries(profileTemp).filter(([key, value]) => Object.values(DescriptionEnum).some(el => el === key)), ['status', `${statusTemp}`]].map(([key, value]) => {
+                        return <DescriptionBlock value={value}
+                                                 setPopupDataHandler={setPopupDataHandler}
+                                                 mode={key}
+                        />
+                    })
+                }
                 <div>
                     <div className={s.AddIcon} style={{width: '100%', minHeight: '40px'}}>
                         <span className={s.SpanDescription}>
                                 <div style={{display: 'flex', alignItems: 'center', marginLeft: '10px'}}>
-                                <Avatar sx={{
-                                    margin: '0 20px 0 0',
-                                    width: '35px',
-                                    height: '35px',
-                                    backgroundColor: '#2C3E50'
-                                }} className={s.AddIconScale}>
+                                <Avatar sx={{backgroundColor: '#2C3E50'}} className={s.AddIconScale}>
                                     <SearchIcon style={{
-                                        backgroundColor: '#2C3E50',
+                                        color: 'white',
                                         width: '23px',
                                         height: '23px',
-                                        margin: '0 0 1px 0px'
-                                    }}/>
+                                        margin: '0px'
+                                    }}
+                                                fontSize={'medium'}
+                                    />
                                 </Avatar>
                                     <h5 style={{
                                         fontSize: '19px',
@@ -272,6 +222,7 @@ const ModifyProfilePopup = ({closeModifyWindow}: ModifyWindowPropsType) => {
         </Paper>
     </div>
 };
+
 
 export default ModifyProfilePopup;
 

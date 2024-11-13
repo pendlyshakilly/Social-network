@@ -1,4 +1,4 @@
-.searchWrapper{
+.searchWrapper {
     background-color: whitesmoke;
     position: absolute;
     width: 300px;
@@ -8,30 +8,70 @@
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.33);
     top: -50px;
     border-right: rgba(0, 0, 0, 0.12);
+    animation: slide-in 0.3s ease-out forwards;
+   /* animation: open, closed 0.5s ease-out, opacity 0.5s ease ;*/
 }
-.searchContainer{
+
+/*@keyframes open {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-101%);
+        opacity: 1;
+    }
+}
+
+@keyframes closed {
+    from {
+        transform: translateX(0); !* Зсуває компонент праворуч *!
+        opacity: 1; !* Компонент стає невидимим *!
+    }
+    to {
+        transform: translateX(-101%);
+        opacity: 1;
+    }
+}*/
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-101%);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+.searchContainer {
     scroll-margin-block: 0;
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.search{
+.search {
     margin-top: 54px;
 }
 
 
-.responseContainer{
+.responseContainer {
     overflow-y: auto;
     height: 80%;
 }
-.responseContainer::-webkit-scrollbar{
+
+.responseContainer::-webkit-scrollbar {
     width: 12px;
     height: 50%;
 }
+
 .responseContainer::-webkit-scrollbar-track {
     background: whitesmoke;
 }
+
 .responseContainer::-webkit-scrollbar-thumb {
     background-color: #CED0D4;
     border-radius: 20px;
@@ -39,9 +79,7 @@
 }
 
 
-
-
-.usersResponse{
+.usersResponse {
     display: flex;
     width: 94%;
     align-items: center;
@@ -51,13 +89,13 @@
     color: black;
 }
 
-.usersResponse:hover{
+.usersResponse:hover {
     background-color: rgba(224, 224, 224, 0.88);
     border-radius: 7px;
 }
 
 
-.searchBlockContainer{
+.searchBlockContainer {
     position: sticky;
     top: 0;
     height: 180px;

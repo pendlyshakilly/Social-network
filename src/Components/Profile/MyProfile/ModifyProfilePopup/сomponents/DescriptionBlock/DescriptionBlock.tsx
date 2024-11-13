@@ -1,21 +1,30 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './DescriptionBlock.module.css'
 import Avatar from "@mui/material/Avatar";
-import {Dialog, Paper, SvgIconTypeMap} from "@mui/material";
+import {Icon, SvgIconTypeMap} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {OverridableComponent} from "@mui/material/OverridableComponent";
-import {MyProfileType} from "../../../../../../State/Profile-reducer";
-import TextFieldCustom from "../ProfileDetailsEditPopup/ProfileDetailsEditPopup";
+import BadgeIcon from "@mui/icons-material/Badge";
+import InfoIcon from "@mui/icons-material/Info";
+import DescriptionIcon from "@mui/icons-material/Description";
+import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
+import {PopupType} from "../../ModifyProfilePopup";
 
 
 type AddFullNamePropsType = {
-    property: string | null
-    setValue: (object: MyProfileType | string) => void
-    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string }
-    title: string,
-    modeWord: string,
-    text: string,
-    profileTemp: MyProfileType
+    value: any
+    setPopupDataHandler: (isOpen: boolean, type: PopupType | null, inputText: string | null, mode: string | null) => void
+    mode: string,
+}
+
+
+type descriptionDataType = {
+    icons: {
+        [key: string]: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string; }
+    },
+    text: {
+        [key: string]: string
+    }
 }
 
 const DescriptionBlock = (props: AddFullNamePropsType) => {
@@ -33,6 +42,23 @@ const DescriptionBlock = (props: AddFullNamePropsType) => {
             })
         }
     }*/
+
+    const descriptionData: descriptionDataType = {
+        icons: {
+            'fullName': BadgeIcon,
+            'aboutMe': InfoIcon,
+            'status': DescriptionIcon,
+            'lookingForAJobDescription': HomeRepairServiceIcon
+        },
+        text: {
+            'fullName': 'Full name',
+            'aboutMe': 'About me',
+            'status': 'Status',
+            'lookingForAJobDescription': 'Job description'
+        }
+    }
+
+
 
     return (
         <div>
@@ -63,31 +89,25 @@ const DescriptionBlock = (props: AddFullNamePropsType) => {
                         </div>
                     </Paper>
                 </Dialog>*/}
-                <div className={s.AddIcon} style={{width: '100%'}}>
-                        <span className={s.SpanDescription} >
-                                <div
-                                    style={{display: 'flex', alignItems: 'center', marginLeft: '10px', height: '50px'}}>
-                                <Avatar sx={{
-                                    margin: '0 20px 0 0',
-                                    width: '35px',
-                                    height: '35px',
-                                    backgroundColor: '#2C3E50'
-                                }} className={s.AddIconScale}>
-                                    <props.icon style={{
-                                        backgroundColor: '#2C3E50',
+                <div className={s.AddIcon} style={{width: '100%'}} onClick={() => props.setPopupDataHandler(true, 'desc', props.value, props.mode)}>
+                        <span className={s.SpanDescription}>
+                                <div style={{display: 'flex', alignItems: 'center', marginLeft: '10px', height: '50px'}}>
+                                <Avatar className={s.AddIconScale} sx={{backgroundColor: '#2C3E50 '}}>
+                                    <Icon component={descriptionData.icons[props.mode]} style={{
+                                        color: 'white',
                                         width: '23px',
                                         height: '23px',
                                         margin: '0px'
-                                    }}/>
+                                    }} fontSize={'medium'}/>
                                 </Avatar>
                                     <h5 style={{
                                         fontSize: '19px',
                                         fontWeight: '400',
                                         letterSpacing: '0.3px',
                                         whiteSpace: 'nowrap'
-                                    }}>{props.title}</h5>
+                                    }}>{descriptionData.text[props.mode]}</h5>
                                 </div>
-                            {props.property ?
+                            {props.value ?
                                 <span style={{color: 'black', marginRight: '10px'}}>
                                     <span style={{
                                         margin: '0 5px 0 5px',
@@ -95,7 +115,7 @@ const DescriptionBlock = (props: AddFullNamePropsType) => {
                                         fontWeight: '600',
                                         letterSpacing: '0.4px',
                                         color: '#1976d2'
-                                    }}>{props.property.length >= 22 ? props.property.substring(0, 22) + '...' : props.property}</span>
+                                    }}>{props.value.length >= 22 ? props.value.substring(0, 22) + '...' : props.value}</span>
                                 </span>
                                 :
                                 <span style={{display: 'flex', alignItems: 'center', marginRight: '10px'}}>
@@ -111,5 +131,6 @@ const DescriptionBlock = (props: AddFullNamePropsType) => {
         </div>
     );
 };
+
 
 export default DescriptionBlock;

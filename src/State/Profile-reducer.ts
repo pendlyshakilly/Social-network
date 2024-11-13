@@ -1,6 +1,7 @@
 import {AppThunk} from "./Store";
 import {ProfileAPI} from "../Dal/API";
 import myProfile from "../Components/Profile/MyProfile/MyProfile";
+import {SetIsLoading} from "./App-reducer";
 
 const USER_PROFILE_TYPE = 'USER_PAGE' as const
 const SET_USER_STATUS_TYPE = 'SET_USER_STATUS' as const
@@ -31,7 +32,7 @@ export const getUserPage = (userId: string): AppThunk => (dispatch) => {
         dispatch(setUserPage(newUserProfile))
     })
 }
-export const getMyProfile = (): AppThunk => (dispatch, getState) => {
+export const getMyProfile = (): AppThunk => (dispatch, getState: any) => {
     let userId = getState().auth.id
     if (userId) {
         let getStatus = ProfileAPI.getStatus(userId)
@@ -39,6 +40,7 @@ export const getMyProfile = (): AppThunk => (dispatch, getState) => {
         Promise.all([getStatus, getProfile]).then((res: any) => {
             dispatch(setMyStatus(res[0].data))
             dispatch(setMyProfile(res[1]))
+            dispatch(SetIsLoading(false))
         })
     }
 }
@@ -46,9 +48,10 @@ export const updateMyProfile = (myProfile: MyProfileType, myStatus: string, myPh
     let updateStatus = ProfileAPI.updateStatus(myStatus)
     let updateProfile = ProfileAPI.updateProfile(myProfile)
     let  updatePhoto = ProfileAPI.updatePhoto(myPhoto)
+    dispatch(SetIsLoading(true))
     Promise.all([updateStatus, updateProfile, updatePhoto]).then(res => {
-        console.log(res)
         dispatch(getMyProfile())
+
     })
 }
 

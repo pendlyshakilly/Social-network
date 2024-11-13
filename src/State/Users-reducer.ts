@@ -50,13 +50,13 @@ export const getFriends = (): AppThunk => (dispatch) => {
         dispatch(ToggleLoader(false))
     })
 }
-export const findUser = (userName: string): AppThunk => (dispatch, getState) => {
+export const findUser = (userName: string): AppThunk => (dispatch, getState: any) => {
     UsersAPI.findUser(userName).then(res => {
         let error = 'UserNotFound'
         dispatch(DeleteError(error))
         dispatch(FoundUsers(res.items))
         if (res.items.length === 0){
-            if (!getState().initialized.errors.some(el => el === error)) {
+            if (!getState().initialized.errors.some((el: any) => el === error)) {
                 dispatch(SetError(error))
             }
         }

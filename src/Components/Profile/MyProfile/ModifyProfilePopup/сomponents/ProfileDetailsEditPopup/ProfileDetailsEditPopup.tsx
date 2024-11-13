@@ -1,6 +1,5 @@
-import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Button, Dialog, Paper, TextField} from "@mui/material";
-import {MyProfileType} from "../../../../../../State/Profile-reducer";
 
 
 type PropsType = {
@@ -15,51 +14,21 @@ const TextFieldCustom = (props: PropsType) => {
     const [value, setValue] = useState<string | null>(props.inputText)
     const [isValid, setIsValid] = useState(false)
 
-
-    /*const getSocialLink = (value: string | null): string | null => {
-        if(value === null) return null
-        if (value.includes('https://')) {
-            return value
-        } else {
-            return `https://www.${props.mode}.com/${value}`
-        }
-        return null
-    }*/
+    useEffect(() => setValue(props.inputText), [props.inputText])
 
     const onSaveHandler = () => {
         if (!isValid){
             if (value !== null && value.trim() === ''){
                 props.onSaveTempHandler(null)
                 setValue(null)
+                setIsValid(false)
             }else {
                 props.onSaveTempHandler(value)
                 setValue(null)
+                setIsValid(false)
             }
         }
-        /*if(!isValid && props.mode){
-          if (props.type === 'contact'){
-              props.mode && props.setProfileTemp({
-                  ...props.profileTemp,
-                  contacts: {
-                      ...props.profileTemp.contacts,
-                      [props.mode]: getSocialLink(value)
-                  }
-              })
-              props.onClose(false)
-          } else if (props.type === 'desc') {
-              if (props.mode === 'status') {
-                  props.setStatusTemp(value === null ? '' : value)
-              } else {
-                  props.setProfileTemp({
-                      ...props.profileTemp,
-                      contacts: {...props.profileTemp.contacts}, [props.mode]: value === 'null' ? '' : value
-                  })
-              }
-          }
-
-        }*/
     }
-
 
 
 
@@ -84,11 +53,6 @@ const TextFieldCustom = (props: PropsType) => {
 
 
 
-
-
-
-
-
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
         const valueTemp = e.currentTarget.value
@@ -101,7 +65,9 @@ const TextFieldCustom = (props: PropsType) => {
             <Dialog transitionDuration={500}
                     open={props.isOpen}
                     maxWidth={false}
-                    onClose={props.onClose}
+                    onClose={() => {
+                        props.onClose()
+                        setIsValid(false)}}
                     style={{margin: '0 auto'}}>
                 <Paper sx={{
                     width: '40vh',
@@ -119,7 +85,7 @@ const TextFieldCustom = (props: PropsType) => {
                         flexDirection: 'column',
                         alignItems: 'start'
                     }}>
-                        <h3>{'Edit '}</h3>
+                        <h3>{'Edit your profile details'}</h3>
 
                         <TextField
                             autoFocus={true} onChange={onChangeHandler}
@@ -131,7 +97,8 @@ const TextFieldCustom = (props: PropsType) => {
                             inputProps={{style: {fontSize: '16px'}}}
                             id="outlined-basic" label={'Here'}
                             sx={{width: '96%', minHeight: '71px'}}
-                            defaultValue={props.inputText && ((props.type === 'desc') ? props.inputText : props.inputText.split('/')[3])}
+                            defaultValue={props.inputText &&  props.inputText.includes('https://') ?
+                                (props.inputText.split('/')[3] !== undefined ? props.inputText.split('/')[3] : props.inputText) : props.inputText}
                             variant={'standard'}/>
                         <div style={{
                             display: 'flex',
@@ -142,15 +109,16 @@ const TextFieldCustom = (props: PropsType) => {
                         }}>
                             <Button
                                 sx={{margin: '0px 5px 10px 0px'}}
-                                onClick={() => props.onClose()}
+                                onClick={() => {
+                                    props.onClose()
+                                    setIsValid(false)}}
                             >
                                 Cansel
                             </Button>
                             <Button
                                 disabled={isValid}
                                 sx={{margin: '0px 15px 10px 5px'}}
-                                onClick={() => onSaveHandler()}
-                            >
+                                onClick={onSaveHandler}>
                                 Save
                             </Button>
                         </div>

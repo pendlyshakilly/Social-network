@@ -41,9 +41,7 @@ const ContactsBlock = (props: EditableFieldContactsType) => {
                  onClick={() => props.setPopupDataHandler(true, 'contact', props.link, props.mode)}>
                 <Avatar
                     className={s.AddIconScale}
-                    // style={props.style}
                     sx={{margin: '0 10px 0 10px', backgroundColor: '#2C3E50'}}>
-
                     <Icon fontSize={'medium'} component={contacts[props.mode]}/>
                 </Avatar>
                 {props.link ?
@@ -53,10 +51,12 @@ const ContactsBlock = (props: EditableFieldContactsType) => {
                                         fontSize: '20px',
                                         maxWidth: '90%',
                                         wordWrap: 'break-word'
-                                    }}>{props.link.includes('https://') ? (props.link.split('/')[3] !== undefined ? props.link.split('/')[3] : props.link) : props.link}</span>
+                                    }}>
+                                        {props.link.includes('https://') ?
+                                            (props.link.split('/')[3] !== undefined ?
+                                                props.link.split('/')[3] : props.link) : props.link}</span>
 
-                    </a>
-                    :
+                    </a> :
                     <a style={{display: 'flex', transition: 'all 1s'}}>
                         <AddIcon/>
                         <span>Add</span>

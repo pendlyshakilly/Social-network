@@ -5,12 +5,11 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import GroupsIcon from '@mui/icons-material/Groups';
-import Search from "./Search/Search";
+import SearchBar from "./SearchBar/SearchBar";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, AppRootStateType} from "../../State/Store";
 import {AppInitialStateType, SetSearchMode} from "../../State/App-reducer";
-
-
+import styles from './SearchBar/SearchBar.module.css'
 
 const Navbar = () => {
 
@@ -28,7 +27,7 @@ const Navbar = () => {
 
     return <div className={s.navbarContainer}>
         <nav className={s.nav}>
-            <div>
+            <div className={s.navIcons}>
                 <NavLink to={"/my-profile"} className={s.item} style={style} onClick={() => setSearchMode(false)}>
                     <AccountCircleIcon fontSize={'large'} sx={sx}/>
                     {!searchMode && <span>Profile</span>}
@@ -49,9 +48,11 @@ const Navbar = () => {
                 </div>
             </div>
             {searchMode &&
-                <Search onClickAway={() => {
-                    setSearchMode(false)
-                }}/>
+                <div className={`${styles.searchWrapper} ${searchMode ? styles.open : styles.closed}`}>
+                    <SearchBar onClickAway={() => {
+                        setSearchMode(false)
+                    }}/>
+                </div>
             }
         </nav>
     </div>

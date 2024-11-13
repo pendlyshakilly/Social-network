@@ -9,9 +9,9 @@ import User from "../../Users/User/User";
 import DescriptionBlock from "../../Utils/DecriptionBlock/DescriptionBlock";
 import ModifyProfilePopup from "./ModifyProfilePopup/ModifyProfilePopup";
 import {getMyProfile, MyProfileType} from "../../../State/Profile-reducer";
+import SliderForFriends from "./Swiper/SliderForFriends";
 
 const MyProfile = () => {
-    const friends = useSelector<AppRootStateType, UserType[]>(state => state.userPage.friends)
     const myProfile = useSelector<AppRootStateType, MyProfileType>(state => state.profilePage.MyProfile)
     const dispatch = useDispatch<AppDispatch>()
     const [mode, setMode] = useState(false)
@@ -53,15 +53,9 @@ const MyProfile = () => {
                 </div>
                 <div className={s.ContainerDescription}>
                     <DescriptionBlock/>
+
                     <Paper elevation={4} className={s.FriendsContainer}>
-                        {
-                            friends.slice(0, 3).map((el: UserType) => <div className={s.User}>
-                                <User id={el.id} status={el.status}
-                                      photos={el.photos}
-                                      name={el.name}
-                                      followed={el.followed}/>
-                            </div>
-                        )}
+                        <SliderForFriends/>
                     </Paper>
                 </div>
             </div>

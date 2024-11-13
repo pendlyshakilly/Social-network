@@ -8,12 +8,14 @@ export type AppInitialStateType = {
     initialized: boolean
     searchMode: boolean
     errors: string[]
+    isLoading: boolean
 }
 
 const InitialState: AppInitialStateType = {
     initialized: false,
     searchMode: false,
-    errors: []
+    errors: [],
+    isLoading: false,
 }
 
 const AppReducer = (state: AppInitialStateType = InitialState, action: AppActionsType): AppInitialStateType => {
@@ -26,6 +28,8 @@ const AppReducer = (state: AppInitialStateType = InitialState, action: AppAction
             return {...state, errors: [...state.errors, action.error]}
         case DELETE_ERROR_TYPE:
             return {...state, errors: state.errors.filter(el => el !== action.ErrorId)}
+        case SET_ISLOADING_TYPE:
+            return {...state, isLoading: action.isLoading}
         default:
             return state
     }
@@ -35,14 +39,16 @@ const INITIALIZED_TYPE = 'INITIALIZED_TYPE' as const
 const SET_SEARCH_MODE = 'SET_SEARCH_MODE' as const
 const SET_ERROR_TYPE = 'SET_ERROR_TYPE' as const
 const DELETE_ERROR_TYPE = 'DELETE_ERROR_TYPE' as const
+const SET_ISLOADING_TYPE = 'SET_ISLOADING_TYPE' as const
 
 type InitializedSuccessType = ReturnType<typeof InitializedSuccess>
 type SetSearchModeType = ReturnType<typeof SetSearchMode>
 type SetErrorType = ReturnType<typeof SetError>
 type DeleteErrorType = ReturnType<typeof DeleteError>
+type SetIsLoadingType = ReturnType<typeof SetIsLoading>
 
 type AppActionsType = InitializedSuccessType | SetSearchModeType
-    | SetErrorType | DeleteErrorType
+    | SetErrorType | DeleteErrorType | SetIsLoadingType
 
 export const DeleteError = (ErrorId: string) => ({type: DELETE_ERROR_TYPE, ErrorId})
 export const SetError = (error: string) => ({type: SET_ERROR_TYPE, error} as const)
@@ -56,5 +62,6 @@ export const Initialized = (): AppThunk => (dispatch) => {
         .catch(e => alert(e))
 
 }
+export const SetIsLoading = (isLoading: boolean) => ({type: SET_ISLOADING_TYPE, isLoading} as const)
 
 export default AppReducer;

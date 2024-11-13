@@ -2,10 +2,14 @@
     position: relative;
     width: 86%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .MyProfileContainer{
-    margin: 10px 20px 0px 20px
+    margin: 10px 20px 0 20px;
+    width: 75vw;
 }
 
 .ContainerHeader{
@@ -15,10 +19,11 @@
     align-items: start;
     flex-wrap: wrap;
     height: 100px;
+    width: 100%;
 }
 
 .BigImg{
-    width: 100%;
+    width: 77vw;
     height: 40vh;
     background-color: #e5e5e5;
     background-image: linear-gradient(#e5e5e5 200px, rgba(0, 0, 0, 0.57));
@@ -36,7 +41,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    width: 100%;
+    width: 65%;
     margin-left: 20px;
     min-height: 100%;
 }
@@ -46,6 +51,8 @@
     display: flex;
     margin-bottom: 30px;
     min-height: 40vh;
+    flex-wrap: nowrap;
+    width: 100%;
 }
 
 .User {
@@ -58,5 +65,17 @@
 
 }
 
+
+/*@media (max-width: 1619px) {
+    .ContainerDescription{
+        flex-wrap: wrap;
+    }
+    .FriendsContainer {
+        margin: 20px 0 0 0;
+    }
+    .BigImg{
+        max-width: 89%;
+    }
+}*/
 
 

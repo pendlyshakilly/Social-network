@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {InputBase, Paper} from "@mui/material";
-import s from './Search.module.css'
+import s from './SearchBar.module.css'
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
 import Divider from "@mui/material/Divider";
@@ -18,18 +18,20 @@ import Avatar from "@mui/material/Avatar";
 import {NavLink} from "react-router-dom";
 import {DeleteError} from "../../../State/App-reducer";
 import ClearIcon from '@mui/icons-material/Clear';
+import styles from "./SearchBar.module.css";
 
 type SearchPropsType = {
     onClickAway: () => void
 }
 
-const Search = (props: SearchPropsType) => {
+const SearchBar = (props: SearchPropsType) => {
     const [value, setValue] = useState('')
     const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null)
     const dispatch = useDispatch<AppDispatch>()
     const foundUsers = useSelector<AppRootStateType, UserType[]>(state => state.userPage.foundUsers)
     const recentUser = useSelector<AppRootStateType, UserType[]>(state => state.userPage.recentUser)
     const errors = useSelector<AppRootStateType, string[]>(state => state.initialized.errors)
+
 
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +61,7 @@ const Search = (props: SearchPropsType) => {
 
 
     return (
-        <div className={s.searchWrapper}>
+        <div >
             <div className={s.searchContainer}>
                 <div className={s.searchBlockContainer}
                      style={foundUsers.length !== 0 ? {height: '150px'} : {height: '180px'}}>
@@ -69,7 +71,7 @@ const Search = (props: SearchPropsType) => {
                             <InputBase
                                 onChange={onChangeHandler}
                                 sx={{ml: 1, flex: 1}}
-                                placeholder="Search user"
+                                placeholder="SearchBar user"
                                 inputProps={{'aria-label': 'search google maps'}}
                             />
                             <IconButton type="button" sx={{p: '10px'}} aria-label="search">
@@ -112,4 +114,4 @@ const Search = (props: SearchPropsType) => {
     );
 };
 
-export default Search;
+export default SearchBar;

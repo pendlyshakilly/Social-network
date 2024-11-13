@@ -17,3 +17,10 @@
 .AddContactsBlock:hover .AddIconScale {
     transform: scale(1.1);
 }
+
+.Avatar{
+    margin: 0 20px 0 0;
+    width: 35px;
+    height: 35px;
+    background-color: #2C3E50;
+}

@@ -41,12 +41,12 @@ const DescriptionBlock = () => {
         {contact: 'github', style: {backgroundColor: 'black', cursor: 'pointer'}, icon: GitHubIcon},
         {contact: 'youtube', style: {backgroundColor: 'white', cursor: 'pointer'}, icon: YouTubeIcon},
     ]
-    myProfile.lookingForAJob && description.push({property: '', icon: SearchIcon, text: 'Search a job'})
+    myProfile.lookingForAJob && description.push({property: '', icon: SearchIcon, text: 'SearchBar a job'})
 
     return (
         <Paper elevation={4} sx={{
-            width: '100%',
-            maxWidth: 360,
+            width: '35%',
+            minWidth: 360,
             backgroundColor: 'background.paper',
             paddingRight: '10px'
         }}>

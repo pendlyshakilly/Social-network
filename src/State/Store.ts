@@ -1,7 +1,7 @@
-import {AnyAction, applyMiddleware, combineReducers, createStore} from 'redux';
+import {AnyAction, applyMiddleware, combineReducers, createStore, legacy_createStore} from 'redux';
 import ProfileReducer from "./Profile-reducer";
 import AuthReducer from "./Auth-reducer";
-import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
+import {thunk, ThunkAction, ThunkDispatch, ThunkMiddleware} from 'redux-thunk'
 import AppReducer from "./App-reducer";
 import UserReducer from "./Users-reducer";
 import {composeWithDevTools} from "@redux-devtools/extension";
@@ -17,7 +17,7 @@ const rootReducers = combineReducers({
     initialized: AppReducer
 })
 
-const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunkMiddleware)))
+const store = legacy_createStore<any, any>(rootReducers, composeWithDevTools(applyMiddleware(thunk)))
 
 export type AppRootStateType = ReturnType<typeof rootReducers>
 
